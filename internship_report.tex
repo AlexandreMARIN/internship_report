@@ -42,6 +42,8 @@ Ma position de stagiaire a été la suivante~: j'ai été intégré dans la dire
 
 Ce rapport présente d'abord succinctement le déroulement du stage, expose ensuite le contexte du stage en présentant l'entreprise, puis la mission du stage est détaillée et une quatrième partie apporte la conclusion.
 
+Les informations qui concernent l'IFPEN ont été recueillies sur le site internet de l'IFPEN et sur l'intranet de l'entreprise.
+
 \section{Déroulement du stage}
 %un paragraphe par mois
 %une ou deux pages
@@ -66,10 +68,47 @@ Les programmes de recherche sont menés à travers des projets pouvant faire int
 On trouve aussi dans l'entreprise une école d'ingénieurs, IFP School, ainsi que la direction générale. Il y a enfin un conseil d'administration, composé de seize membres dont quatre sont des représentants de l'\'Etat venant des ministères de l'énergie, de l'industrie, du budget et de la recherche.
 
 \section{Mission du stage}
-%objectifs
-%travail fait
-%résultats
-%problèmes
+
+\subsection{Objectifs}
+
+Ce stage sert de prélude à la thèse \og Maillage polyédrique de volumes 3D optimisé pour la simulation en géosciences \fg{}~: l'objectif de cette thèse est de proposer et confronter plusieurs stratégies de génération d'un maillage polyédrique du sous-sol à de nouveaux types de schémas numériques. Afin de rendre possibles des simulations concernant les problématiques du stockage du CO$_2$, la géothermie ou l'hydrogéologie, il faut représenter le plus fidèlement possible les discontinuités et hétérogénéités de la structure des sous-sols qui influencent beaucoup les transferts de masse et d'énergie. Il s'agit donc, étant donnée une description surfacique des éléments en jeu, de mailler un volume en respectant certaines contraintes, comme la conformité ou les rapports de forme des mailles.
+
+Le premier objectif était, d'une part, d'effectuer un travail bibliographique sur la génération de maillages, et d'autre part, de créer une bibliothèque logicielle qui fournisse un maximum d'algorithmes et les structures de données nécessaires au développement du mailleur.
+
+\subsection{Travail effectué}
+
+La bibliographie servant de point de départ se trouve à la fin du rapport, en page \pageref{biblio}. L'article \cite{Garimella} décrit une procédure qui génère des maillages de volumes séparés par des interfaces, à partir des diagrammes de Voronoï. Puisqu'il faut au préalable déterminer des triangulations de Delaunay, les notes \cite{delnotes} ont été lues pour avoir à disposition des algorithmes de génération de maillages de Delaunay. Le livre \cite{Edelsbrunner} complète les deux premières références, en donnant par exemple la définition des diagrammes de Voronoï étendus pour les maillages de Delaunay contraints.
+
+La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'environnement de développement intégré QtCreator. Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente ici~:
+\begin{description}
+\item[noyau géométrique]~: cela permet d'effectuer des calculs en géométrie. La bibliothèque Eigen écrite en C++ a été incorporée au projet pour faire de l'algèbre linéaire ;
+\item[maillages bidimensionnels]~: on utilise la structure en demi-arêtes pour représenter les maillages dans le plan ;
+\item[entrées/sorties]~: afin de visualiser ou réutiliser des maillages, l'importation et/ou l'exportation a été codée pour les formats OBJ et PLY ;
+\item[Delaunay]~: ce projet fournit des algorithmes pour générer des triangulations de Delaunay et de Delaunay contraintes ;
+\item[Voronoï]~: ce projet permet de calculer des diagrammes de Voronoï ;
+\item[tests]~: dans ce dernier sous-projet, on y prépare des cas tests pour valider les programmes et pour s'assurer que ces derniers sont stables, rapides et/ou suffisamment précis.
+\end{description}
+
+La gestion de version s'est faite grâce à l'outil Git.
+
+\subsubsection{Structure en demi-arêtes}
+
+Afin de rendre compte de la \emph{topologie} du maillage, la structure de données en demi-arêtes a été mise en \oe{}uvre~: cela consiste à représenter le maillage par un graphe plan orienté. Chaque arête donne naissance à deux demi-arêtes, opposées l'une à l'autre, chacune pointant vers l'une des extrémités de l'arête. Pour se déplacer à l'intérieur de la structure de données, chaque demi-arête $he$ pointe vers une autre demi-arête qui part de la destination de $he$ ; $he$ pointe aussi vers la demi-arête qui lui est opposée. Enfin chaque sommet $v$ pointe vers une demi-arête qui part de $v$ et l'on sait pour chaque demi-arête à quelle face elle appartient.
+
+Ainsi, il est aisé de se déplacer dans le maillage et l'on a accès instantanément à des informations topologiques. Par exemple, on peut facilement parcourir une partie de bord du maillage, connaître les voisins d'un sommet et les arêtes qui lui sont incidentes.
+
+Les algorithmes de génération de maillage ont été écrits en tenant compte des avantages de cette structure.
+
+\subsubsection{Maillages de Delaunay}
+\subsubsection{Diagrammes de Voronoï}
+
+\subsection{Résultats}
+
+
+\subsection{Problèmes rencontrés}
+
+%visualisation-couleurs
+%bogues
 
 \section{Conclusion}
 
@@ -88,5 +127,6 @@ On trouve aussi dans l'entreprise une école d'ingénieurs, IFP School, ainsi qu
 %bibliography
 \bibliographystyle{plain}
 \bibliography{doc}
+\label{biblio}
 
 \end{document}
