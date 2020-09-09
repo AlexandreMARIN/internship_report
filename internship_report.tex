@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,draft]{report}
+\documentclass[12pt,a4paper]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 \usepackage[T1]{fontenc}
@@ -6,9 +6,12 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
-\usepackage{pdfpages}
-\usepackage[nottoc,section]{tocbibind}
+\usepackage{xcolor}
+\usepackage[pdfauthor={Alexandre MARIN}, pdfkeywords={IFPEN, Delaunay, Voronoi, mesh generation}, colorlinks=true, linkcolor=purple, urlcolor=blue, citecolor=magenta]{hyperref}
+%\usepackage{pdfpages}
 
+%\usepackage[nottoc,section]{tocbibind}
+\usepackage[defaultbib]{bibtopic}
 \renewcommand{\thesection}{\arabic{section}}
 
 \graphicspath{{pictures/}}
@@ -53,9 +56,11 @@ Pendant le deuxième mois, le code C++ a ensuite été réorganisé dans le but 
 
 \section{Contexte et données générales}
 %2-3 pages
+Cette section a été composée à partir d'informations récupérées sur le site internet de l'IFPEN et sur son réseau intranet.
+
 L'Institut Français du Pétrole -- \'Energies Nouvelles (IFPEN) est une entreprise du groupe du même nom : il s'agit d'un établissement public de recherche et de formation dans les domaines de l'énergie, du transport et de l'environnement, placé sous la tutelle du ministre chargé de l'énergie. IFPEN est financé environ à moitié par l'\'Etat et crée lui-même plus de 50\% de son budget, notamment en valorisant le travail issu de la recherche. L'entreprise est présente sur deux sites : l'un à Rueil-Malmaison en \^Ile-de-France et l'autre à Solaize en Auvergne-Rhône-Alpes.
 
-En 2019, IFPEN comptait $1\ 633$ salariés à temps plein, dont $1\ 136$ ingénieurs et techniciens R\&I (Recherche et Innovation), ainsi que près de $200$ allocataires de recherche, postdoctorants et stagiaires. Son budget atteignait $283,3$\textrm{M}\texteuro. IFPEN déposait aussi $185$ brevets et est à l'origine de plus de $600$ publications scientifiques et communications à congrès.
+En 2019, IFPEN comptait $1\ 633$ salariés à temps plein, dont $1\ 136$ ingénieurs et techniciens R\&I (Recherche et Innovation), ainsi que près de $200$ allocataires de recherche, postdoctorants et stagiaires. Son budget atteignait $283,3$~\textrm{M}\texteuro. IFPEN déposait aussi $185$ brevets et est à l'origine de plus de $600$ publications scientifiques et communications à congrès.
 
 IFPEN conçoit et développe des procédés, des équipements et des logiciels qui concernent quatre domaines : la mobilité durable, les énergies renouvelables, les hydrocarbures responsables, et le climat/l'environnement. Dans le domaine climat et environnement, l'une des problématiques est par exemple le captage, le stockage et l'utilisation du CO$_2$. Il s'agit de proposer aux industries lourdes (sidérurgie, cimenterie, raffinage, chimie, pétrochimie) des technologies pour réduire massivement leurs émissions de CO$_2$.
 
@@ -79,9 +84,9 @@ Le premier objectif était, d'une part, d'effectuer un travail bibliographique s
 
 La bibliographie servant de point de départ se trouve à la fin du rapport, en page \pageref{biblio}. L'article \cite{Garimella} décrit une procédure qui génère des maillages de volumes séparés par des interfaces, à partir des diagrammes de Voronoï. Puisqu'il faut au préalable déterminer des triangulations de Delaunay, les notes \cite{delnotes} ont été lues pour avoir à disposition des algorithmes de génération de maillages de Delaunay. Le livre \cite{Edelsbrunner} complète les deux premières références, en donnant par exemple la définition des diagrammes de Voronoï étendus pour les maillages de Delaunay contraints.
 
-La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'environnement de développement intégré QtCreator. Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente ici~:
+La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'environnement de développement intégré QtCreator \cite{QtCreator}. Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente ici~:
 \begin{description}
-\item[noyau géométrique]~: cela permet d'effectuer des calculs en géométrie. La bibliothèque Eigen écrite en C++ a été incorporée au projet pour faire de l'algèbre linéaire ;
+\item[noyau géométrique]~: cela permet d'effectuer des calculs en géométrie. La bibliothèque Eigen \cite{Eigen} écrite en C++ a été incorporée au projet pour faire de l'algèbre linéaire ;
 \item[maillages bidimensionnels]~: on utilise la structure en demi-arêtes pour représenter les maillages dans le plan ;
 \item[entrées/sorties]~: afin de visualiser ou réutiliser des maillages, l'importation et/ou l'exportation a été codée pour les formats OBJ et PLY ;
 \item[Delaunay]~: ce projet fournit des algorithmes pour générer des triangulations de Delaunay et de Delaunay contraintes ;
@@ -89,7 +94,7 @@ La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'
 \item[tests]~: dans ce dernier sous-projet, on y prépare des cas tests pour valider les programmes et pour s'assurer que ces derniers sont stables, rapides et/ou suffisamment précis.
 \end{description}
 
-La gestion de version s'est faite grâce à l'outil Git.
+La gestion de version s'est faite grâce à l'outil Git \cite{Git}.
 
 \subsubsection{Structure en demi-arêtes}
 
@@ -100,7 +105,22 @@ Ainsi, il est aisé de se déplacer dans le maillage et l'on a accès instantan�
 Les algorithmes de génération de maillage ont été écrits en tenant compte des avantages de cette structure.
 
 \subsubsection{Maillages de Delaunay}
+
+Une triangulation de Delaunay d'un ensemble de points $V\subset\mathbb{R}^2$ est un maillage conforme de l'enveloppe convexe de $V$, constitué de triangles satisfaisant la propriété du cercle vide~: le disque ouvert défini par le cercle circonscrit d'un triangle ne doit contenir aucun sommet de $V$. Ces triangles sont dits alors Delaunay. Parmi toutes les triangulations de $V$, celles qui sont Delaunay maximisent la valeur du plus petit angle formé par deux arêtes~: ce sont donc, pour cet ensemble $V$ et du point de vue de la qualité des mailles, les \og meilleures \fg{} triangulations.
+
+La propriété des ces maillages s'exprime aussi localement~: un maillage est Delaunay si et seulement si chaque arête est localement Delaunay, \emph{i.e.} si chaque arête $e$ est au bord ou bien est la frontière commune de deux triangles $\tau_1$ et $\tau_2$ tels que le cercle circonscrit de $\tau_1$ n'englobe aucun sommet de $\tau_2$.
+
+Lorsque l'on souhaite faire apparaître des arêtes spécifiques d'un ensemble $L$ dans le maillage à obtenir, on peut produire des maillages Delaunay contraints~: il suffit pour cela de créer des maillages dont chaque arête est soit dans $L$, soit localement Delaunay. Les éléments de $L$ sont appelés des segments.
+
+Dans la bibliothèque à concevoir, on a ajouté des algorithmes de natures différentes qui construisent de tels maillages. On y trouve l'algorithme de Bowyer-Watson qui transforme un maillage Delaunay en une autre triangulation de Delaunay en insérant un nouveau sommet. On peut aussi décrire un polyèdre général à trous et définir des arêtes et points intérieurs à ce polyèdre, et ensuite obtenir un maillage Delaunay contraint qui tient compte de toutes ces données grâce à l'algorithme d'emballage cadeau, dit \emph{Gift-Wrapping}~: pour cela on part des arêtes du bord et on ajoute au fur et à mesure des triangles Delaunay en avançant vers l'intérieur du domaine à mailler. Des variantes de ces algorithmes ont été mises en \oe{}uvre pour ajouter un nouveau segment dans un maillage Delaunay contraint ou pour insérer un nouveau sommet à l'extérieur d'un premier maillage.
+
 \subsubsection{Diagrammes de Voronoï}
+
+\subsubsection{Structure de données accélératrice}
+
+Les fonctions programmées étant censées générer de \og grands \fg{} maillages, des nuages de points très denses doivent être constitués~: la  complexité temporelle des algorithmes prend alors toute son importance. Par exemple, pour l'algorithme de Bowyer-Watson, la complexité dépend aussi d'une procédure de localisation de points dans une face du maillage ; dans le cas d'une recherche exhaustive, la complexité de l'étape de localisation est en $O(t)$, avec $t$ le nombre de triangles du maillage. On décide de remplacer cette procédure coûteuse en s'aidant d'un \emph{quadtree}, \emph{i.e.} un arbre quaternaire.
+
+Le principe de la recherche est le suivant~: au préalable, on part d'une boîte $B$ censée englober le maillage et on convient du nombre maximal d'éléments pouvant être contenus dans une feuille de l'arbre. Chaque n\oe{}ud de l'arbre représente une région rectangulaire qui est une portion de la boîte englobante $B$. Lorsque qu'une feuille contient trop d'éléments, on lui crée quatre fils qui correspondent chacun à un quart de la zone représentée par l'ancienne feuille, puis on répartit les éléments dans les nouvelles feuilles selon leur position dans la région. Ainsi, la complexité de la recherche d'un élément selon sa position est en $O(h_{\text{quadtree}})$, avec $h_{\text{quadtree}}$ la hauteur de l'arbre construit.
 
 \subsection{Résultats}
 
@@ -109,6 +129,7 @@ Les algorithmes de génération de maillage ont été écrits en tenant compte d
 
 %visualisation-couleurs
 %bogues
+La principale difficulté a été la vérification des fonctions programmées par la visualisation des résultats obtenus. Différents logiciels ont été utilisés, comme Paraview, CloudCompare ou MeshLab \cite{Paraview, MeshLab, CloudCompare}, mais ils n'interprètent pas tous les mêmes formats de fichier et ils peuvent rendre compte des maillages très différemment. Par exemple, le format PLY permet de renseigner des couleurs attachées à des points, arêtes et faces ; cependant ces données ne sont pas toujours acceptées et souvent les éléments sont coloriés par interpolation des couleurs des extrémités, ce qui ne correspond pas tout le temps à ce que l'on veut obtenir. Ces couleurs se sont révélées pratiques quand il a fallu afficher des propriétés comme celle d'être localement Delaunay pour une arête.
 
 \section{Conclusion}
 
@@ -123,10 +144,21 @@ Les algorithmes de génération de maillage ont été écrits en tenant compte d
 \end{center}
 \clearpage
 
-\nocite{*}
-%bibliography
+\section{Références}
+\vspace*{1cm}
+
 \bibliographystyle{plain}
-\bibliography{doc}
+\begin{btSect}{doc}
+\section*{Bibliographie}
+\btPrintCited
+\end{btSect}
 \label{biblio}
+
+\bibliographystyle{plain}
+\begin{btSect}{software}
+\section*{Logiciels}
+\btPrintCited
+\end{btSect}
+\label{software}
 
 \end{document}
