@@ -25,14 +25,15 @@
 \maketitle
 \end{titlepage}
 
-\begin{titlepage}
+
+\pagenumbering{gobble}
 \section*{Remerciements}
-\end{titlepage}
 
-\begin{titlepage}
+
 \tableofcontents
-\end{titlepage}
+\newpage
 
+\pagenumbering{arabic}
 
 \section{Introduction}
 %1 page
@@ -43,10 +44,11 @@ Ce document est le rapport de mon stage qui a eu lieu à l'Institut Français du
 
 Ma position de stagiaire a été la suivante~: j'ai été intégré dans la direction scientifique \emph{Sciences et Technologies du Numérique}, et plus précisément dans le département \emph{Informatique Scientifique} du site de Rueil-Malmaison de IFPEN.
 
-Ce rapport présente d'abord succinctement le déroulement du stage, expose ensuite le contexte du stage en présentant l'entreprise, puis la mission du stage est détaillée et une quatrième partie apporte la conclusion.
+Ce rapport présente d'abord succinctement le déroulement du stage, expose ensuite son contexte en présentant l'entreprise, puis la mission du stage est détaillée et une quatrième partie apporte la conclusion.
 
 Les informations qui concernent l'IFPEN ont été recueillies sur le site internet de l'IFPEN et sur l'intranet de l'entreprise.
 
+\newpage
 \section{Déroulement du stage}
 %un paragraphe par mois
 %une ou deux pages
@@ -54,6 +56,9 @@ Le premier mois du stage a été consacré à la découverte des locaux, à cert
 
 Pendant le deuxième mois, le code C++ a ensuite été réorganisé dans le but d'ajouter plus facilement d'autres fonctionnalités comme le calcul de triangulations de Delaunay contraintes. De nombreux tests ont aussi été effectués pour vérifier la stabilité des programmes ainsi que la qualité des résultats.
 
+Le rapport de stage a été composé lors du troisième mois. Entretemps, des diagrammes de Voronoï étaient générés et le code était amélioré.
+
+\newpage
 \section{Contexte et données générales}
 %2-3 pages
 Cette section a été composée à partir d'informations récupérées sur le site internet de l'IFPEN et sur son réseau intranet.
@@ -72,6 +77,7 @@ Les programmes de recherche sont menés à travers des projets pouvant faire int
 
 On trouve aussi dans l'entreprise une école d'ingénieurs, IFP School, ainsi que la direction générale. Il y a enfin un conseil d'administration, composé de seize membres dont quatre sont des représentants de l'\'Etat venant des ministères de l'énergie, de l'industrie, du budget et de la recherche.
 
+\newpage
 \section{Mission du stage}
 
 \subsection{Objectifs}
@@ -88,7 +94,7 @@ La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'
 \begin{description}
 \item[noyau géométrique]~: cela permet d'effectuer des calculs en géométrie. La bibliothèque Eigen \cite{Eigen} écrite en C++ a été incorporée au projet pour faire de l'algèbre linéaire ;
 \item[maillages bidimensionnels]~: on utilise la structure en demi-arêtes pour représenter les maillages dans le plan ;
-\item[entrées/sorties]~: afin de visualiser ou réutiliser des maillages, l'importation et/ou l'exportation a été codée pour les formats OBJ et PLY ;
+\item[entrées/sorties]~: afin de visualiser ou réutiliser des maillages, l'importation et/ou l'exportation a été codée pour les formats \verb+OBJ+ et \verb+PLY+ ;
 \item[Delaunay]~: ce projet fournit des algorithmes pour générer des triangulations de Delaunay et de Delaunay contraintes ;
 \item[Voronoï]~: ce projet permet de calculer des diagrammes de Voronoï ;
 \item[tests]~: dans ce dernier sous-projet, on y prépare des cas tests pour valider les programmes et pour s'assurer que ces derniers sont stables, rapides et/ou suffisamment précis.
@@ -106,15 +112,23 @@ Les algorithmes de génération de maillage ont été écrits en tenant compte d
 
 \subsubsection{Maillages de Delaunay}
 
-Une triangulation de Delaunay d'un ensemble de points $V\subset\mathbb{R}^2$ est un maillage conforme de l'enveloppe convexe de $V$, constitué de triangles satisfaisant la propriété du cercle vide~: le disque ouvert défini par le cercle circonscrit d'un triangle ne doit contenir aucun sommet de $V$. Ces triangles sont dits alors Delaunay. Parmi toutes les triangulations de $V$, celles qui sont Delaunay maximisent la valeur du plus petit angle formé par deux arêtes~: ce sont donc, pour cet ensemble $V$ et du point de vue de la qualité des mailles, les \og meilleures \fg{} triangulations.
+Une \emph{triangulation de Delaunay} d'un ensemble de points $V\subset\mathbb{R}^2$ est un maillage conforme de l'enveloppe convexe de $V$, constitué de triangles satisfaisant la propriété du cercle vide~: le disque ouvert défini par le cercle circonscrit d'un triangle ne doit contenir aucun sommet de $V$. Ces triangles sont dits alors Delaunay. Parmi toutes les triangulations de $V$, celles qui sont Delaunay maximisent la valeur du plus petit angle formé par deux arêtes~: ce sont donc, pour cet ensemble $V$ et du point de vue de la qualité des mailles, les \og meilleures \fg{} triangulations.
 
-La propriété des ces maillages s'exprime aussi localement~: un maillage est Delaunay si et seulement si chaque arête est localement Delaunay, \emph{i.e.} si chaque arête $e$ est au bord ou bien est la frontière commune de deux triangles $\tau_1$ et $\tau_2$ tels que le cercle circonscrit de $\tau_1$ n'englobe aucun sommet de $\tau_2$.
+La propriété des ces maillages s'exprime aussi localement~: un maillage est Delaunay si et seulement si chaque arête est \emph{localement Delaunay}, \emph{i.e.} si chaque arête $e$ est au bord ou bien est la frontière commune de deux triangles $\tau_1$ et $\tau_2$ tels que le cercle circonscrit de $\tau_1$ n'englobe aucun sommet de $\tau_2$.
 
-Lorsque l'on souhaite faire apparaître des arêtes spécifiques d'un ensemble $L$ dans le maillage à obtenir, on peut produire des maillages Delaunay contraints~: il suffit pour cela de créer des maillages dont chaque arête est soit dans $L$, soit localement Delaunay. Les éléments de $L$ sont appelés des segments.
+Lorsque l'on souhaite faire apparaître des arêtes spécifiques d'un ensemble $L$ dans le maillage à obtenir, on peut produire des maillages \emph{Delaunay contraints}~: il suffit pour cela de créer des maillages dont chaque arête est soit dans $L$, soit localement Delaunay. Les éléments de $L$ sont appelés des \emph{segments}.
 
 Dans la bibliothèque à concevoir, on a ajouté des algorithmes de natures différentes qui construisent de tels maillages. On y trouve l'algorithme de Bowyer-Watson qui transforme un maillage Delaunay en une autre triangulation de Delaunay en insérant un nouveau sommet. On peut aussi décrire un polyèdre général à trous et définir des arêtes et points intérieurs à ce polyèdre, et ensuite obtenir un maillage Delaunay contraint qui tient compte de toutes ces données grâce à l'algorithme d'emballage cadeau, dit \emph{Gift-Wrapping}~: pour cela on part des arêtes du bord et on ajoute au fur et à mesure des triangles Delaunay en avançant vers l'intérieur du domaine à mailler. Des variantes de ces algorithmes ont été mises en \oe{}uvre pour ajouter un nouveau segment dans un maillage Delaunay contraint ou pour insérer un nouveau sommet à l'extérieur d'un premier maillage.
 
 \subsubsection{Diagrammes de Voronoï}
+
+Le \emph{diagramme de Voronoï} d'un ensemble fini de points $V\subset\mathbb{R}^2$ est constitué d'un ensemble de cellules $V_p$ pour tout $p\in V$, définies par
+\[V_p\ :=\ \left\{x\in\mathbb{R}^2\middle\vert\ \forall\,q\in V,\ \Vert x-p\Vert\leqslant\Vert x-q\Vert\right\}\text{.}\]
+Il s'agit du dual de la triangulation de Delaunay $\mathcal{T}$ de $V$~: le diagramme de Voronoï relie les centres de cercle circonscrit des triangles de $\mathcal{T}$. Il existe toujours cependant des cellules de Voronoï qui sont infinies et délimitées aussi par des bissectrices des arêtes du bord de $\mathcal{T}$. De façon générale, les cellules $V_p$ sont des polygones convexes.
+
+Lorsque l'on définit en plus l'ensemble des segments $L$ qui doivent apparaître dans le maillage $\mathcal{T}$, on s'intéresse plutôt au diagramme de Voronoï \emph{étendu} $\mathcal{V}$, défini dans \cite[pages 30-31]{Edelsbrunner}. Ici on ne représente que la \og feuille primale \fg{}~: on ne fait pas figurer des arêtes qui relient des centres de cercle circonscrit dans le diagramme $\mathcal{V}$ si elles intersectent un segment de $L$. Les sommets des cellules de Voronoï peuvent alors être des milieux de segments ou des intersections de bissectrices d'arêtes de $\mathcal{T}$ avec d'autres arêtes de $\mathcal{T}$.
+
+Un exemple de diagramme de Voronoï obtenu avec la blibliothèque développée est visible sur la figure \ref{del_vor}.
 
 \subsubsection{Structure de données accélératrice}
 
@@ -129,10 +143,12 @@ Le principe de la recherche est le suivant~: au préalable, on part d'une boîte
 
 %visualisation-couleurs
 %bogues
-La principale difficulté a été la vérification des fonctions programmées par la visualisation des résultats obtenus. Différents logiciels ont été utilisés, comme Paraview, CloudCompare ou MeshLab \cite{Paraview, MeshLab, CloudCompare}, mais ils n'interprètent pas tous les mêmes formats de fichier et ils peuvent rendre compte des maillages très différemment. Par exemple, le format PLY permet de renseigner des couleurs attachées à des points, arêtes et faces ; cependant ces données ne sont pas toujours acceptées et souvent les éléments sont coloriés par interpolation des couleurs des extrémités, ce qui ne correspond pas tout le temps à ce que l'on veut obtenir. Ces couleurs se sont révélées pratiques quand il a fallu afficher des propriétés comme celle d'être localement Delaunay pour une arête.
+La principale difficulté a été la vérification des fonctions programmées par la visualisation des résultats obtenus. Différents logiciels ont été utilisés, comme Paraview, CloudCompare ou MeshLab \cite{Paraview, CloudCompare, MeshLab}, mais ils n'interprètent pas tous les mêmes formats de fichier et ils peuvent rendre compte des maillages très différemment. Par exemple, le format \verb+PLY+ permet de renseigner des couleurs attachées à des points, arêtes et faces ; cependant ces données ne sont pas toujours acceptées et souvent les éléments sont coloriés par interpolation des couleurs des extrémités, ce qui ne correspond pas tout le temps à ce que l'on veut obtenir. Néanmoins ces couleurs se sont révélées pratiques quand il a fallu afficher des propriétés comme celle d'être localement Delaunay pour une arête.
 
+\newpage
 \section{Conclusion}
 
+\newpage
 \section{Annexes}
 
 \begin{center}
@@ -143,6 +159,16 @@ La principale difficulté a été la vérification des fonctions programmées pa
 \end{figure}
 \end{center}
 \clearpage
+
+\begin{center}
+\begin{figure}[htbp]
+\includegraphics[scale=0.35, viewport=530 0 1680 1129, clip]{del_vor.jpg}
+\caption{Triangulation de Delaunay (arêtes en bleu clair) et diagramme de Voronoï correspondant (arêtes en bleu foncé) (image obtenue avec Paraview)}
+\label{del_vor}
+\end{figure}
+\end{center}
+\clearpage
+
 
 \section{Références}
 \vspace*{1cm}
