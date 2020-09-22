@@ -59,7 +59,7 @@ Pendant le deuxième mois, le code C++ a ensuite été réorganisé dans le but 
 
 Le rapport de stage a été composé lors du troisième mois. Entretemps, des diagrammes de Voronoï étaient générés et le code était amélioré.
 
-%quatrième mois !
+Quant au dernier mois du stage, il a permis une seconde étude bibliographique sur des structures de données adaptées à des maillages polyédriques 3D.
 
 \newpage
 \section{Contexte et données générales}
@@ -90,11 +90,13 @@ Ce stage sert de prélude à la thèse \og \emph{Maillage polyédrique de volume
 
 Le premier objectif était, d'une part, d'effectuer un travail bibliographique sur la génération de maillages, et d'autre part, de créer une bibliothèque logicielle qui fournisse un maximum d'algorithmes et les structures de données nécessaires au développement du mailleur.
 
+Cependant le véritable but du stage était l'appropriation de concepts liés à la génération de maillages 2D pour ensuite mieux saisir ceux relatifs à la génération de maillages 3D polyédriques.
+
 \subsection{Travail effectué}
 
 \subsubsection{\'Eléments théoriques pour les maillages}
 
-On présente ici les triangulations de Delaunay, les triangulations de Delaunay contraintes pour mailler un domaine non nécessairement convexe, puis le dual des ces triangulations qui sont une piste pour l'obtention d'un maillage polyédrique.
+On présente ici les triangulations de Delaunay, les triangulations de Delaunay contraintes pour mailler un domaine non nécessairement convexe, puis le dual des ces triangulations qui sont une piste pour l'obtention d'un maillage polyédrique ayant de bonnes propriétés.
 \vspace{1cm}
 
 Une \emph{triangulation de Delaunay} d'un ensemble de points $V\subset\mathbb{R}^2$ est un maillage conforme de l'enveloppe convexe de $V$, constitué de triangles satisfaisant la propriété du cercle vide~: le disque ouvert défini par le cercle circonscrit d'un triangle ne doit contenir aucun sommet de $V$. Ces triangles sont dits alors Delaunay. Parmi toutes les triangulations de $V$, celles qui sont Delaunay maximisent la valeur du plus petit angle formé par deux arêtes~: ce sont donc, pour cet ensemble $V$ et du point de vue de la qualité des mailles, les \og meilleures \fg{} triangulations.
@@ -138,7 +140,7 @@ Le principe de la recherche est le suivant~: au préalable, on part d'une boîte
 
 On peut citer quatre grandes familles d'algorithmes de génération de maillage :
 \begin{description}
-\item[les méthodes d'avance de front] : les éléments sont intégrés un par un, en partant du bord du domaine afin de progresser vers son centre ;
+\item[les méthodes d'avancée de front] : les éléments sont intégrés un par un, en partant du bord du domaine afin de progresser vers son centre ;
 \item[les procédures de raffinement] ;
 \item[les algorithmes de grilles] : à l'aide d'une grille, d'un quadtree ou d'un octree, une grille structurée est représentée pour servir de guide lors de la subdivision du domaine à mailler ;
 \item[les algorithmes d'amélioration de maillage] : ils effectuent des opérations visant à optimiser localement un premier maillage.
@@ -148,12 +150,12 @@ On peut citer quatre grandes familles d'algorithmes de génération de maillage 
 
 Dans la bibliothèque à concevoir, on a ajouté des algorithmes des deux premières classes qui construisent des maillages de Delaunay, contraints ou non. On y trouve l'algorithme les deux algorithmes principaux suivants.
 
-\paragraph{Algorithme de Bowyer-Watson} : cette procédure de la première famille transforme un maillage Delaunay en une autre triangulation de Delaunay en insérant un nouveau sommet, par retriangulation locale. Les étapes sont :
+\paragraph{Algorithme de Bowyer-Watson} : cette procédure de la deuxième famille transforme un maillage Delaunay en une autre triangulation de Delaunay en insérant un nouveau sommet, par retriangulation locale. Les étapes sont :
 \begin{enumerate}
 \item localisation du nouveau sommet $s$ : trouver un triangle $\tau$ dont le cercle circonscrit contient $s$ ;
 \item à partir de $\tau$, trouver de proche en proche tous les triangles qui ne satisfont plus la propriété du cercle vide à cause de $s$ ;
 \item suppression des triangles trouvés ;
-\item retriangulation de la cavité formée : chaque triangle doit avoir $s$ pour sommet et avoir une arête de la cavité pour côté.
+\item retriangulation de la cavité formée : chaque nouveau triangle doit avoir $s$ pour sommet et avoir une arête de la cavité pour côté.
 \end{enumerate}
 Avec une procédure de localisation efficace, on peut espérer une complexité en $O(n\log n)$, avec $n$ le nombre de sommets en entrée.
 
@@ -165,10 +167,13 @@ S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité d
 
 On peut ajouter un segment $l$ à une triangulation de Delaunay contrainte en supprimant toutes les arêtes dont l'intérieur intersecte $l$ puis en appliquant l'algorithme d'emballage cadeau à la cavité formée.
 
+\vspace{1cm}
 \subsubsection{Bibliographie et mise en \oe{}uvre informatique}
 
 La bibliographie servant de point de départ se trouve à la fin du rapport, en page \pageref{biblio}. L'article \cite{Garimella} décrit une procédure qui génère des maillages de volumes séparés par des interfaces, à partir des diagrammes de Voronoï. Puisqu'il faut au préalable déterminer des triangulations de Delaunay, les notes \cite{delnotes} ont été lues pour avoir à disposition des algorithmes de génération de maillages de Delaunay. Le livre \cite{Edelsbrunner} complète les deux premières références, en donnant par exemple la définition des diagrammes de Voronoï étendus pour les maillages de Delaunay contraints.
+
 \vspace{1cm}
+
 La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'environnement de développement intégré QtCreator \cite{QtCreator}. Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente ici~:
 \begin{description}
 \item[noyau géométrique (GeometricCore)]~: cela permet d'effectuer des calculs en géométrie. La bibliothèque Eigen \cite{Eigen} écrite en C++ a été incorporée au projet pour faire de l'algèbre linéaire ;
@@ -181,7 +186,7 @@ La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'
 
 
 
-Un certain nombre de mécanismes du C++ ont été utilisés pour ajouter de la clarté au projet. Chaque module de la bibliothèque contient plusieurs fichiers sources et d'en-têtes où sont définies des classes, les interactions entre ces dernières étant régies par l'ajout de méthodes, le réglage des visibilités des membre données où encore par une technique de création de clé, nécessaire pour invoquer une méthode, mais que seules certaines classes peuvent se procurer. Dans la mesure du possible, les concepts étaient modélisés par des classes ; les méthodes qui prenaient en argument une fonction étaient codées comme des patrons que l'on utilisait par exemple grâce à des \emph{lambda}.
+Un certain nombre de mécanismes du C++ ont été utilisés pour ajouter de la clarté au projet. Chaque module de la bibliothèque contient plusieurs fichiers sources et en-têtes où sont définies des classes, les interactions entre ces dernières étant régies par l'ajout de méthodes, le réglage des visibilités des membres données où encore par une technique de création de clé, nécessaire pour invoquer une méthode, mais que seules certaines classes peuvent se procurer. Dans la mesure du possible, les concepts étaient modélisés par des classes ; les méthodes qui prenaient en argument une fonction étaient codées comme des patrons que l'on utilisait par exemple grâce à des \emph{lambda}.
 
 La classe maillage manipule des indices pour référencer les sommets, demi-arêtes et faces. Or la structure de données évolue beaucoup à cause d'ajouts et suppressions répétés d'éléments, il a fallu avoir à disposition une classe \og vecteur à trous \fg{} qui gère elle-même la modification du contenu d'une zone mémoire contiguë : les cases vides sont réutilisées dès que possible et les indices permettant de retrouver les éléments des vecteurs restent inchangés pendant tout le programme.
 
@@ -192,7 +197,7 @@ L'architecture du projet est visible sur la figure \ref{archi} et quelques donn�
 
 \subsection{Résultats}
 
-Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement est engendrée en moins de $40$ secondes.
+Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement peut être engendrée en moins de $40$ secondes.
 
 \subsection{Problèmes rencontrés}
 
@@ -202,6 +207,10 @@ La principale difficulté a été la vérification des fonctions programmées pa
 
 \newpage
 \section{Conclusion}
+
+Le travail effectué pendant ce stage m'a permis, d'une part, de me perfectionner en programmation en réfléchissant pendant plusieurs mois à l'élaboration d'une bibliothèque, et d'autre part, de découvrir des méthodes pour générer et représenter des maillages 2D et 3D.
+Grâce aux difficultés rencontrées, théoriques et pratiques, je peux à présent mieux mesurer la complexité de la mission dans laquelle s'inscrit la thèse correspondante.
+Enfin, ce stage constitue une expérience professionnelle supplémentaire qui m'a fait connaître une entreprise dont les missions liées au domaines de l'énergie et de l'environnement sont d'actualité et font partie d'un secteur d'avenir.
 
 \newpage
 \section{Annexes}
