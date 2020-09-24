@@ -1,0 +1,104 @@
+@phdthesis{merland:tel-01749569,
+  TITLE = {{G{\'e}n{\'e}ration de grilles de type volumes finis : adaptation {\`a} un mod{\`e}le structural, p{\'e}trophysique et dynamique}},
+  AUTHOR = {Merland, Romain},
+  URL = {https://hal.univ-lorraine.fr/tel-01749569},
+  NUMBER = {2013LORR0037},
+  SCHOOL = {{Universit{\'e} de Lorraine}},
+  YEAR = {2013},
+  MONTH = Apr,
+  KEYWORDS = {Voronoi ; Centroidal ; Local refinement ; Anisotropy ; Faces orientation ; Conformity ; Optimization ; Flow simulation ; Reservoir ; Barycentrique ; Raffinement local ; Anisotropie ; Orientation des faces ; Conformit{\'e} ; Optimisation ; Simulation d'{\'e}coulement ; Analyse spatiale (statistique) ; Grilles (analyse num{\'e}rique) ;  Polygones de ; Fluides ;  Dynamique des-Simulation ;  M{\'e}thodes de},
+  TYPE = {Theses},
+  PDF = {https://hal.univ-lorraine.fr/tel-01749569/file/DDOC_T_2013_0037_MERLAND.pdf},
+  HAL_ID = {tel-01749569},
+  HAL_VERSION = {v1},
+}
+
+@article{CAUMON2005671,
+title = "{Visualization of grids conforming to geological structures: a topological approach}",
+journal = "{Computers \& Geosciences}",
+volume = "31",
+number = "6",
+pages = "671 - 680",
+year = "2005",
+issn = "0098-3004",
+doi = "https://doi.org/10.1016/j.cageo.2005.01.020",
+url = "http://www.sciencedirect.com/science/article/pii/S0098300405000385",
+author = "Guillaume Caumon and Bruno Lévy and Laurent Castanié and Jean-Claude Paul",
+keywords = "Algorithm, Volume visualization, Unstructured grid, Stratigraphic grid, Data structure",
+abstract = "Flexible grids are used in many Geoscience applications because they can accurately adapt to the great diversity of shapes encountered in nature. These grids raise a number difficult challenges, in particular for fast volume visualization. We propose a generic incremental slicing algorithm for versatile visualization of unstructured grids, these being constituted of arbitrary convex cells. The tradeoff between the complexity of the grid and the efficiency of the method is addressed by special-purpose data structures and customizations. A general structure based on oriented edges is defined to address the general case. When only a limited number of polyhedron types is present in the grid (zoo grids), memory usage and rendering time are reduced by using a catalog of cell types generated automatically. This data structure is further optimized to deal with stratigraphic grids made of hexahedral cells. The visualization method is applied to several gridded subsurface models conforming to geological structures."
+}
+
+@INPROCEEDINGS{ViardGM2012,
+    author = { Viard, Thomas and Cavelius, Claude and Mallison, Bradley and Sword, Charles H. },
+     title = "{ Data structure improvements for 3D polyhedral grids with application to unstructured discrete fracture models. }",
+ booktitle = "{ Proc. 32nd Gocad Meeting, Nancy }",
+      year = { 2012 },
+  abstract = { Multi-million cell grids are a common practice in the realm of structured grids and allow ﬁnescale 3D rock properties to be eﬀectively captured in the model. However, structured grids usually involve approximations on the subsurface geometry such as stair-stepped faults, or wasteful ﬁtting strategies such as dead cells in the vicinity of fault T-junctions. Unstructured grids allow a better ﬁt to complex geological structures. Unfortunately, their larger footprint in memory has a negative impact on performance. Consequently, unstructured grids are frequently built at a coarser scale than structured grids, which can result in a loss of resolution on rock properties.
+Designing a compact, memory-eﬃcient data structure is the key to removing this limitation. In this paper, we present a fully 3D general-purpose unstructured framework, whose main beneﬁts are:
+the amount of memory required per polyhedron is much lower, allowing larger unstructured grids to be used in practice,
+it is not restricted to a speciﬁc type of polyhedron (e.g., only tetrahedra), nor to the typical limitations of 2.5D unstructured grids and locally unstructured grids, and
+all adjacency queries can be performed in constant or bounded time, making algorithms scalable with the total number of polyhedra.
+We demonstrate the eﬃciency of our framework for building unstructured grids for discrete fracture-matrix models. The grid generation algorithm is ﬂexible enough to closely ﬁt a large amount of geological features (e.g., wells, faults, fractures, horizons) and reﬁne the mesh in the vicinity of these features, so that it largely takes advantage of our unstructured grid capabilities.
+Our data structures are an improvement upon the TopoKernel plug-in, which is directly available from the Gocad Research Group. }
+}
+
+@article{FENG2013149,
+title = "{Compact combinatorial maps: A volume mesh data structure}",
+journal = "{Graphical Models}",
+volume = "75",
+number = "3",
+pages = "149 - 156",
+year = "2013",
+note = "{Computational Visual Media Conference 2012}",
+issn = "1524-0703",
+doi = "https://doi.org/10.1016/j.gmod.2012.10.001",
+url = "http://www.sciencedirect.com/science/article/pii/S1524070312000690",
+author = "Xin Feng and Yuanzhen Wang and Yanlin Weng and Yiying Tong",
+keywords = "3D mesh, Combinatorial maps, Cell complex, Half-face, Compact mesh data structure",
+abstract = "We propose a compact data structure for volumetric meshes of arbitrary topology and bounded valence that offers cell–face, face–edge, and edge–vertex incidence queries in constant time. Our structure is simple to implement, easy to use, and allows for arbitrary, user-defined 3-cells such as prisms and hexahedra, while remaining very efficient in memory usage compared to previous work. Its time complexity for commonly-used incidence and adjacency queries such as vertex and dart one-rings is analyzed."
+}
+
+@inproceedings{kremer:hal-00762280,
+  TITLE = {{OpenVolumeMesh - A Versatile Index-Based Data Structure for 3D Polytopal Complexes}},
+  AUTHOR = {Kremer, Michael and Bommes, David and Kobbelt, Leif},
+  URL = {https://hal.inria.fr/hal-00762280},
+  BOOKTITLE = {{21st International Meshing Roundtable}},
+  ADDRESS = {San Jose, United States},
+  PUBLISHER = {{Springer}},
+  SERIES = {Proceedings of the 21st International Meshing Roundtable},
+  PAGES = {531-548},
+  YEAR = {2012},
+  MONTH = Oct,
+  DOI = {10.1007/978-3-642-33573-0\_31},
+  PDF = {https://hal.inria.fr/hal-00762280/file/ovm.pdf},
+  HAL_ID = {hal-00762280},
+  HAL_VERSION = {v1},
+}
+
+@PHDTHESIS{Lepage03These,
+    author = { Lepage, François },
+     title = { Génération de maillages tridimensionnels pour la simulation des phénomènes physiques en géosciences },
+   chapter = { 0 },
+      year = { 2003 },
+    school = { INPL, Nancy, France },
+  abstract = { Three-dimensional meshes are widely used in Geosciences for discretizing the geological
+objects of the problem domain, thus providing a support for the numerical simulation
+of various processes depending on physical properties, such as balanced unfolding, raytracing,
+or fluid flow modelling in porous and permeable rock bodies. However, to ensure
+accuracy, efficiency, and stability, mesh elements must meet several requirements, especially
+on their shape and size.
+This work tackles some problems related to the generation of three-dimensional meshes
+that are expected be tailored to the applications they are dedicated to:
+First of all, starting from a structural madel, that is to say a set of interconnected
+surfaces representing the boundaries of the problem domain, a macro-model, called Soft
+Frame Madel, is defined for integrating the produced meshes and ensuring the geometrical
+and topological validity of their contacts. Then, solutions are proposed for the automatic
+generation of constrained triangulations for the three-dimensional surfaces of the structural
+model. The presented algorithms are guaranteed to terminate, ensure a minimum
+quality of the triangles, and allow a precise control of their size, depending on various
+constraints. As an application, a robust method is described for building sealed geological
+models. Finally, this work presents new algorithms for meshing volumes with tetrahedra
+or arbitrary polyhedra, and providing an efficient control on their shape and size.
+Their compatibility with existing numerical schemes is shown through some examples of
+simulations on real cases. }
+}
