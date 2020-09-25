@@ -30,6 +30,7 @@
 \pagenumbering{gobble}
 \section*{Remerciements}
 
+Je remercie Laurent \textsc{Astart} de m'avoir accueilli à IFPEN pour ce stage de fin d'études et je remercie Alexandra \textsc{Bac} de m'avoir co-encadré.
 
 \tableofcontents
 \newpage
@@ -176,7 +177,8 @@ La bibliographie servant de point de départ se trouve à la fin du rapport, en 
 
 \vspace{1cm}
 
-La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'environnement de développement intégré QtCreator \cite{QtCreator}, sous Windows. Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente ici~:
+La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'environnement de développement intégré QtCreator \cite{QtCreator}, sous Windows. La compilation y est automatisée grâce à des fichiers de type \verb+Makefile+, générés après l'analyse par le programme \verb+QMake+ de fichiers projets \verb+.pro+ (un par sous-projet et un pour le projet global).
+Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente ici~:
 \begin{description}
 \item[noyau géométrique (GeometricCore)]~: cela permet d'effectuer des calculs en géométrie. La bibliothèque Eigen \cite{Eigen} écrite en C++ a été incorporée au projet pour faire de l'algèbre linéaire ;
 \item[maillages bidimensionnels (MeshCore)]~: on utilise la structure en demi-arêtes pour représenter les maillages dans le plan. D'autres classes modélisant des concepts ayant traits aux maillages y figurent, comme des propriétés concernant des faces ou des arêtes ;
@@ -191,6 +193,8 @@ La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'
 Un certain nombre de mécanismes du C++ ont été utilisés pour ajouter de la clarté au projet. Chaque module de la bibliothèque contient plusieurs fichiers sources et en-têtes où sont définies des classes, les interactions entre ces dernières étant régies par l'ajout de méthodes, le réglage des visibilités des membres données où encore par une technique de création de clé, nécessaire pour invoquer une méthode, mais que seules certaines classes peuvent se procurer. Dans la mesure du possible, les concepts étaient modélisés par des classes ; les méthodes qui prenaient en argument une fonction étaient codées comme des patrons que l'on utilisait par exemple grâce à des \emph{lambda}.
 
 La classe maillage manipule des indices pour référencer les sommets, demi-arêtes et faces, or la structure de données évolue beaucoup à cause d'ajouts et suppressions répétés d'éléments. Il a fallu donc avoir à disposition une classe \og vecteur à trous \fg{} qui gère elle-même la modification du contenu d'une zone mémoire contiguë : les cases vides sont réutilisées dès que possible et les indices permettant de retrouver les éléments des vecteurs restent inchangés pendant tout le programme.
+
+Les tests se sont avérés essentiels : un fichier de test par sous-projet a été écrit. On y appelle les méthodes publiques des classes principales pour construire par exemple des maillages simples, mais de temps en temps dans la mesure du possible on essaye de considérer plusieurs cas limites. Par exemple, différentes configurations ont été considérées pour vérifier si le programme parvenait à savoir quand les intérieurs de deux segments s'intersectaient.
 
 \vspace{1cm}
 La gestion de version s'est faite grâce à l'outil Git \cite{Git}.
@@ -210,11 +214,17 @@ Des images sont fournies en annexe pour illustrer quelques résultats issus de l
 %bogues
 La principale difficulté a été la vérification des fonctions programmées par la visualisation des résultats obtenus. Différents logiciels ont été utilisés, comme Paraview, CloudCompare ou MeshLab \cite{Paraview, CloudCompare, MeshLab}, mais ils n'interprètent pas tous les mêmes formats de fichier et ils peuvent rendre compte des maillages très différemment. Par exemple, le format \verb+PLY+ permet de renseigner des couleurs attachées à des points, arêtes et faces ; cependant ces données ne sont pas toujours acceptées et souvent les éléments sont coloriés par interpolation des couleurs des extrémités, ce qui ne correspond pas tout le temps à ce que l'on veut obtenir. Néanmoins ces couleurs se sont révélées pratiques quand il a fallu afficher des propriétés comme celle d'être localement Delaunay pour une arête.
 
+De surcroît, certaines fonctions ne peuvent pas être visualisées simplement. Pour la structure en demi-arêtes, un bogue a été découvert pendant le deuxième mois du stage. En effet, un cas particulier n'avait pas été traité lorsque deux faces doivent être collées, et la connectivité était perdue parce que on ne pouvait parfois plus déduire toutes les arêtes incidentes à un sommet à partir de ce dernier.
+
+Une dernière difficulté était l'adaptation d'algorithmes qui étaient exacts en théorie mais qui ne fonctionnaient pas bien en pratique à cause de l'arithmétique des nombres à virgule flottante. Quand un sommet à ajouter avec l'algorithme de Bowyer-Watson se situait très près d'un segment, il fallait prendre une décision : soit ajouter un triangle presque dégénéré, soit diviser le segment en deux autres segments. Or il n'est pas simple de savoir si le nouveau sommet appartient au segment ou pas, et comme des triangles très plats peuvent quand même apparaître dans une triangulation de Delaunay, il n'est pas non plus évident de savoir quand un triangle doit être jugé \og trop plat\fg{}.
+
 \newpage
 \section{Conclusion}
 
 Le travail effectué pendant ce stage m'a permis, d'une part, de me perfectionner en programmation en réfléchissant pendant plusieurs mois à l'élaboration d'une bibliothèque, et d'autre part, de découvrir des méthodes pour générer et représenter des maillages 2D et 3D.
-Grâce aux difficultés rencontrées, théoriques et pratiques, je peux à présent mieux mesurer la complexité de la mission dans laquelle s'inscrit la thèse correspondante.
+
+Grâce aux difficultés rencontrées, théoriques et pratiques, je peux à présent mieux mesurer la complexité de la mission dans laquelle s'inscrit la thèse correspondante. Cette dernière sera l'occasion de trouver de bonnes propriétés pour des maillages 3D polyédriques, afin de résoudre des équations aux dérivées partielles modélisant des écoulements en milieu poreux.
+
 Enfin, ce stage constitue une expérience professionnelle supplémentaire qui m'a fait connaître une entreprise dont les missions liées au domaines de l'énergie et de l'environnement sont d'actualité et font partie d'un secteur d'avenir.
 
 \newpage
@@ -244,7 +254,7 @@ Enfin, ce stage constitue une expérience professionnelle supplémentaire qui m'
 \draw[thick,blue,->] (f) .. controls +(down:1.5cm) .. (c);
 \draw[thick,blue,->] (g.east) .. controls +(right:1.5cm) .. (c);
 \end{tikzpicture}
-\caption{Architecture du projet~: les flèches indiquent les dépendances d'un sous-projet à un autre.}
+\caption{Architecture du projet~: les flèches indiquent les dépendances d'un sous-projet à un autre, qu'il faut considérer lors de la compilation. Le sous-projet \texttt{Test} permet de construire un exécutable tandis que les autres sous-projets correspondent à des bibliothèques.}
 \label{archi}
 \end{center}
 \end{figure}

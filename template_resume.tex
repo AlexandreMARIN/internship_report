@@ -1,0 +1,25 @@
+\documentclass[12pt]{article}
+\usepackage{mpe}
+\begin{document}
+\entreprise{Institut Français du Pétrole \'Energies Nouvelles}{Direction Sciences et Technologies du Numérique}{1-4 avenue de Bois-Pr\'eau RUEIL-MALMAISON}
+\responsables{Monsieur Laurent ASTART et Madame Alexandra BAC}
+% ou bien \responsables{Madame Pr{\'e}nom NOM de votre 1er responsable de stage et Monsieur
+%Pr{\'e}nom Nom  de votre 2eme responsable de stage}
+\etudiant{Alexandre MARIN}
+% ou bien \etudiante{Pr{\'e}nom NOM}
+\sujet{D\'eveloppement d'une biblioth\`eque de structures et algorithmes pour un mailleur poly\'edrique}
+\resume
+
+Ce stage sert de prélude à la thèse \og \emph{Maillage polyédrique de volumes 3D optimisé pour la simulation en géosciences} \fg{}~: l'objectif de cette thèse est de proposer et confronter plusieurs stratégies de génération d'un maillage polyédrique du sous-sol à de nouveaux types de schémas numériques. Afin de permettre des simulations concernant les problématiques du stockage du CO$_2$, la géothermie ou l'hydrogéologie, il faut représenter le plus fidèlement possible les discontinuités et hétérogénéités de la structure des sous-sols qui influencent beaucoup les transferts de masse et d'énergie. Il s'agit donc, étant donnée une description surfacique des éléments en jeu, de mailler un volume en respectant certaines contraintes, comme la conformité ou les rapports de forme des mailles.
+\vspace{1cm}
+
+Le premier objectif était, d'une part, d'effectuer un travail bibliographique sur la génération de maillages, et d'autre part, de créer une bibliothèque logicielle qui fournisse un maximum d'algorithmes et les structures de données nécessaires au développement du mailleur.
+
+\vspace{1cm}
+
+Finalement, une première étude bibliographique a été faite sur la génération de maillages bidimensionnels et une bibliothèque logicielle a été programmée en C++ pour former des maillages Delaunay contraints et les diagrammes de Voronoï correspondants. La gestion de version s'est faite via l'outil \verb+Git+ et les maillages obtenus étaient visualisés sous Paraview.
+
+\vspace{1cm}
+La fin du stage a été consacrée à une seconde étude bibliographique concernant des structures de données représentant des maillages polyédriques, ainsi que des maillages modélisant des structures géologiques, créés parfois par résolution de problèmes d'optimisation.
+
+\end{document}
