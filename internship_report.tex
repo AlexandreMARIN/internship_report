@@ -20,8 +20,8 @@
 \begin{document}
 
 \begin{titlepage}
-\author{Alexandre \textsc{Marin}\\ Master Mathématiques et applications Sorbonne Université\\ Parcours Ingénierie Mathématique\\ Majeure Ingénierie Mathématique Pour l'Entreprise}
-\date{24/06 -- 30/10/2020\\ Institut Fran\c{c}ais du P\'etrole \'Energies Nouvelles\\ Site de Rueil-Malmaison\\[1cm]Encadrants :\\Laurent \textsc{Astart}\\Alexandra \textsc{Bac}}
+\author{Alexandre \textsc{Marin}\\ Master Mathématiques et Applications Sorbonne Université\\ Parcours Ingénierie Mathématique\\ Majeure Ingénierie Mathématique Pour l'Entreprise}
+\date{24/06 -- 30/10/2020\\ IFP \'Energies Nouvelles\\ Site de Rueil-Malmaison\\[1cm]Encadrants :\\Laurent \textsc{Astart}\\Alexandra \textsc{Bac}}
 \title{Développement d’une bibliothèque de structures et algorithmes pour un mailleur polyédrique}
 \maketitle
 \end{titlepage}
@@ -30,7 +30,7 @@
 \pagenumbering{gobble}
 \section*{Remerciements}
 
-Je remercie Laurent \textsc{Astart} de m'avoir accueilli à IFPEN pour ce stage de fin d'études et je remercie Alexandra \textsc{Bac} de m'avoir co-encadré.
+Je remercie Laurent \textsc{Astart} de m'avoir accueilli à IFP \'Energies Nouvelles pour ce stage de fin d'études et je remercie Alexandra \textsc{Bac} de m'avoir co-encadré.
 
 \tableofcontents
 \newpage
@@ -42,21 +42,21 @@ Je remercie Laurent \textsc{Astart} de m'avoir accueilli à IFPEN pour ce stage 
 %ouverture
 %annonce du plan
 %position du stagiaire dans l'entreprise
-Ce document est le rapport de mon stage qui a eu lieu à l'Institut Français du Pétrole \'Energies Nouvelles (IFPEN), et clôture donc ma seconde année de master à Sorbonne Université.
+Ce document est le rapport de mon stage qui a eu lieu à IFP \'Energies Nouvelles (IFPEN), et clôture donc ma seconde année de master à Sorbonne Université.
 
 Ma position de stagiaire a été la suivante~: j'ai été intégré dans la direction scientifique \emph{Sciences et Technologies du Numérique}, et plus précisément dans le département \emph{Informatique Scientifique} du site de Rueil-Malmaison de IFPEN.
 
 Ce rapport présente d'abord succinctement le déroulement du stage, expose ensuite son contexte en présentant l'entreprise, puis la mission du stage est détaillée et une quatrième partie apporte la conclusion.
 
-Les informations qui concernent l'IFPEN ont été recueillies sur le site internet de l'IFPEN et sur l'intranet de l'entreprise.
+Les informations qui concernent IFPEN ont été recueillies sur son site internet et sur l'intranet de l'entreprise.
 
 \newpage
 \section{Déroulement du stage}
 %un paragraphe par mois
 %une ou deux pages
-Le premier mois du stage a été consacré à la découverte des locaux, à certaines formations obligatoires pour les nouveaux salariés (comme la formation sécurité) et à l'installation de logiciels nécessaires pour le stage. \`A la fin du mois de juillet, j'avais pris en main l'environnement de développement intégré QtCreator, une structure de données en demi-arêtes pour des maillages bidimensionnels était programmée en C++ et des maillages de Delaunay pouvaient être générés.
+Le premier mois du stage a été consacré à la découverte des locaux, à certaines formations obligatoires pour les nouveaux salariés (comme la formation sécurité) et à l'installation de logiciels nécessaires pour le stage. \`A la fin du mois de juillet, j'avais pris en main l'environnement de développement intégré QtCreator, j'avais développé en C++ une structure de données en demi-arêtes pour des maillages bidimensionnels et quelques classes outil pour générer des maillages de Delaunay.
 
-Pendant le deuxième mois, le code C++ a ensuite été réorganisé dans le but d'ajouter plus facilement d'autres fonctionnalités comme le calcul de triangulations de Delaunay contraintes. De nombreux tests ont aussi été effectués pour vérifier la stabilité des programmes ainsi que la qualité des résultats.
+Pendant le deuxième mois, le code C++ a été réorganisé dans le but d'ajouter plus facilement d'autres fonctionnalités comme le calcul de triangulations de Delaunay contraintes. De nombreux tests ont aussi été effectués pour vérifier la stabilité des programmes ainsi que la qualité des résultats.
 
 Le rapport de stage a été composé lors du troisième mois. Entretemps, des diagrammes de Voronoï étaient générés et le code était amélioré.
 
@@ -65,18 +65,18 @@ Quant au dernier mois du stage, il a permis une seconde étude bibliographique p
 \newpage
 \section{Contexte et données générales}
 %2-3 pages
-Cette section a été composée à partir d'informations récupérées sur le site internet de l'IFPEN et sur son réseau intranet.
+Cette section a été composée à partir d'informations récupérées sur le site internet de IFPEN et sur son réseau intranet.
 \vspace{1cm}
 
-L'Institut Français du Pétrole -- \'Energies Nouvelles (IFPEN) est une entreprise du groupe du même nom : il s'agit d'un établissement public de recherche et de formation dans les domaines de l'énergie, du transport et de l'environnement, placé sous la tutelle du ministre chargé de l'énergie. IFPEN est financé environ à moitié par l'\'Etat et crée lui-même plus de 50\% de son budget, notamment en valorisant le travail issu de la recherche. L'entreprise est présente sur deux sites : l'un à Rueil-Malmaison en \^Ile-de-France et l'autre à Solaize en Auvergne-Rhône-Alpes.
+IFP \'Energies Nouvelles\footnote{L'ancienne dénomination était Institut Français du Pétrole jusqu'en 2010.} (IFPEN) est une entreprise du groupe du même nom : il s'agit d'un établissement public de recherche et de formation dans les domaines de l'énergie, du transport et de l'environnement, placé sous la tutelle du ministre chargé de l'énergie. Plus précisément, IFPEN est depuis 2006 un établissement public à caractère industriel et commercial (EPIC)\footnote{D'après l'article Wikipédia sur les EPICs, il s'agit \og d'une personne morale de droit public ayant pour but la gestion d'une activité de service public de nature industrielle et commerciale\fg{}.}. IFPEN est financé environ à moitié par l'\'Etat et crée lui-même plus de 50\% de son budget, notamment en valorisant le travail issu de la recherche. L'entreprise est présente sur deux sites : l'un à Rueil-Malmaison en \^Ile-de-France et l'autre à Solaize en Auvergne-Rhône-Alpes.
 
-En 2019, IFPEN comptait $1\ 633$ salariés à temps plein, dont $1\ 136$ ingénieurs et techniciens R\&I (Recherche et Innovation), ainsi que près de $200$ allocataires de recherche, postdoctorants et stagiaires. Son budget atteignait $283,3$~\textrm{M}\texteuro. IFPEN déposait aussi $185$ brevets et est à l'origine de plus de $600$ publications scientifiques et communications à congrès.
+En 2019, IFPEN comptait $1\ 633$ salariés à temps plein, dont $1\ 136$ ingénieurs et techniciens R\&I (Recherche et Innovation), ainsi que près de $200$ allocataires de recherche, postdoctorants et stagiaires. Son budget atteignait $283,3$~\textrm{M}\texteuro. IFPEN déposait aussi $185$ brevets et était à l'origine de plus de $600$ publications scientifiques et communications à congrès.
 
 IFPEN conçoit et développe des procédés, des équipements et des logiciels qui concernent quatre domaines : la mobilité durable, les énergies renouvelables, les hydrocarbures responsables, et le climat/l'environnement. Dans le domaine climat et environnement, l'une des problématiques est par exemple le captage, le stockage et l'utilisation du CO$_2$. Il s'agit de proposer aux industries lourdes (sidérurgie, cimenterie, raffinage, chimie, pétrochimie) des technologies pour réduire massivement leurs émissions de CO$_2$.
 
 IFPEN collabore avec d'autres instituts de recherche et industries dans le cadre de partenariats qui sont de différents types. IFPEN est ses partenaires financent conjointement un projet de recherche et définissent les règles de propriétés des résultats grâce aux contrats de recherches bilatéraux ou aux consortiums dont certains sont des Joint Industry Project (JIP) : IFPEN y opère le programme R\&I et conserve la propriété industrielle. IFPEN participe aussi à des projets de recherche collaborative qui bénéficient de soutiens publics.
 
-La plupart des entités de IFPEN, que l'on peut voir sur la figure \ref{ifpen_org}, se répartissent dans deux ensembles : les directions de recherche, qui rassemblent les compétences scientifiques, et les directions fonctionnelles, comme les ressources humaines, les finances ou le juridique.
+La plupart des entités de IFPEN, que l'on peut voir sur la figure \ref{ifpen_org}, se répartissent dans deux ensembles : \emph{les directions de recherche}, qui rassemblent les compétences scientifiques, et \emph{les directions fonctionnelles}, comme les ressources humaines, les finances ou le juridique.
 
 Les programmes de recherche sont menés à travers des projets pouvant faire intervenir plusieurs directions de recherche et fonctionnelles. Ces mêmes projets sont pilotés par l'un des cinq centres de résultats qui s'occupent également de leur valorisation industrielle.
 
@@ -100,11 +100,10 @@ Cependant le véritable but du stage était l'appropriation de concepts liés à
 On présente ici les triangulations de Delaunay, les triangulations de Delaunay contraintes pour mailler un domaine non nécessairement convexe, puis le dual des ces triangulations qui sont une piste pour l'obtention d'un maillage polyédrique ayant de bonnes propriétés.
 \vspace{1cm}
 
-Une \emph{triangulation de Delaunay} d'un ensemble de points $V\subset\mathbb{R}^2$ est un maillage conforme de l'enveloppe convexe de $V$, constitué de triangles satisfaisant la propriété du cercle vide~: le disque ouvert défini par le cercle circonscrit d'un triangle ne doit contenir aucun sommet de $V$. Ces triangles sont dits alors Delaunay. Parmi toutes les triangulations de $V$, celles qui sont Delaunay maximisent la valeur du plus petit angle formé par deux arêtes~: ce sont donc, pour cet ensemble $V$ et du point de vue de la qualité des mailles, les \og meilleures \fg{} triangulations.
+Une \emph{triangulation de Delaunay} d'un ensemble de points $V\subset\mathbb{R}^2$ est un maillage conforme de l'enveloppe convexe de $V$, constitué de triangles satisfaisant la propriété du cercle vide~: le disque ouvert défini par le cercle circonscrit d'un triangle ne doit contenir aucun sommet de $V$. Ces triangles sont dits alors Delaunay. Parmi toutes les triangulations de $V$, celles qui sont Delaunay maximisent la valeur du plus petit angle formé par deux arêtes~: ce sont donc, pour cet ensemble $V$ et du point de vue de la qualité des mailles, les \og meilleures \fg{} triangulations. On peut voir un maillage Delaunay sur la figure \ref{delaunay}.
 
-La propriété de ces maillages s'exprime aussi localement~: un maillage est Delaunay si et seulement si chaque arête est \emph{localement Delaunay}, \emph{i.e.} si chaque arête $e$ est au bord ou bien est la frontière commune de deux triangles $\tau_1$ et $\tau_2$ tels que le cercle circonscrit de $\tau_1$ n'englobe aucun sommet de $\tau_2$.
-
-On peut voir un maillage Delaunay et une illustration de la propriété d'être localement Delaunay pour une arête respectivement sur les figures \ref{delaunay} et \ref{locDelaunay}.
+La propriété de ces maillages s'exprime aussi localement~: un maillage est Delaunay si et seulement si chaque arête est \emph{localement Delaunay}, \emph{i.e.} si chaque arête $e$ est au bord ou bien est la frontière commune de deux triangles $\tau_1$ et $\tau_2$ tels que le cercle circonscrit de $\tau_1$ n'englobe aucun sommet de $\tau_2$. Dans ce dernier cas, cela revient à dire qu'un cercle passant par les extrémités de $e$ n'englobe aucun sommet de $\tau_1$ et de $\tau_2$.
+Une illustration de la propriété d'être localement Delaunay pour une arête se trouve sur la figure \ref{locDelaunay}. On y aperçoit les mêmes points et presque les mêmes arêtes à gauche et à droite, cependant l'arête $e$ ne relie pas les mêmes sommets. \`A gauche, un cercle passant par les deux extrémités de $e=\mathrm{AC}$ n'englobe ni $\mathrm{B}$ ni $\mathrm{D}$, donc $e$ est localement Delaunay (les arêtes et sommets n'appartenant pas aux triangles $\mathrm{ACD}$ et $\mathrm{ABC}$ ne doivent pas être pris en compte). Quant au dessin de droite, le cercle circonscrit du triangle $\mathrm{ABD}$ englobe $\mathrm{C}$, donc $e=\mathrm{BD}$ n'est pas localement Delaunay.
 
 Lorsque l'on souhaite faire apparaître des arêtes spécifiques d'un ensemble $L$ dans le maillage à obtenir, on peut produire des maillages \emph{Delaunay contraints}~: il suffit pour cela de créer des maillages dont chaque arête est soit dans $L$, soit localement Delaunay. Les éléments de $L$ sont appelés des \emph{segments}. Plutôt que de mailler l'enveloppe convexe d'un nuage de point, on peut alors mailler un domaine qui n'est plus convexe et qui possède potentiellement des trous.
 Un triangle est dit \emph{Delaunay contraint} s'il satisfait la condition suivante : si son cercle circonscrit englobe un autre sommet du maillage, le triangle est \og caché \fg{} de ce sommet par un segment.
@@ -144,16 +143,16 @@ Une illustration d'un quadtree se trouve en figure \ref{quadtree}.
 On peut citer quatre grandes familles d'algorithmes de génération de maillage :
 \begin{description}
 \item[les méthodes d'avancée de front] : les éléments sont intégrés un par un, en partant du bord du domaine afin de progresser vers son centre ;
-\item[les procédures de raffinement] ;
+\item[les procédures de raffinement] : elles insèrent soigneusement de nouveaux sommets afin de respecter des contraintes sur la qualité et la taille des éléments, tout en gardant une propriété du maillage de départ (comme celle d'être Delaunay)  ;
 \item[les algorithmes de grilles] : à l'aide d'une grille, d'un quadtree ou d'un octree, une grille structurée est représentée pour servir de guide lors de la subdivision du domaine à mailler ;
 \item[les algorithmes d'amélioration de maillage] : ils effectuent des opérations visant à optimiser localement un premier maillage.
 \end{description}
 
 
 
-Dans la bibliothèque à concevoir, on a ajouté des algorithmes des deux premières classes qui construisent des maillages de Delaunay, contraints ou non. On y trouve les deux algorithmes principaux suivants.
+Dans la bibliothèque à concevoir, on a ajouté des algorithmes qui construisent des maillages de Delaunay, contraints ou non. On y trouve les deux algorithmes principaux suivants.
 
-\paragraph{\indent Algorithme de Bowyer-Watson}\label{Bowyer-Watson} : cette procédure de la deuxième famille transforme un maillage Delaunay en une autre triangulation de Delaunay en insérant un nouveau sommet, par retriangulation locale. Les étapes sont :
+\paragraph{\indent Algorithme de Bowyer-Watson}\label{Bowyer-Watson} : cette procédure transforme un maillage Delaunay en une autre triangulation de Delaunay en insérant un nouveau sommet, par retriangulation locale. Les étapes sont :
 \begin{enumerate}
 \item localisation du nouveau sommet $s$ : trouver un triangle $\tau$ dont le cercle circonscrit contient $s$ ;
 \item à partir de $\tau$, trouver de proche en proche tous les triangles qui ne satisfont plus la propriété du cercle vide à cause de $s$ ;
@@ -166,9 +165,13 @@ Avec une procédure de localisation efficace, on peut espérer une complexité e
 
 S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité de cet algorithme est en $O(n^{2}m)$.
 
-\paragraph{Variantes} : l'algorithme de Bowyer-Watson peut être adapté pour insérer un sommet à l'extérieur du maillage en entrée ou pour transformer un maillage Delaunay contraint en un autre. Pour cela il suffit, respectivement, de considérer des triangles \og fantômes \fg{} et de parcourir les triangles de proche en proche sans traverser un segment.
+\paragraph{Variantes} : on peut s'inspirer des algorithmes précédents pour insérer autrement un nouveau sommet dans une triangulation Delaunay (contrainte ou non) tout en conservant la propriété de Delaunay.
 
-On peut ajouter un segment $l$ à une triangulation de Delaunay contrainte en supprimant toutes les arêtes dont l'intérieur intersecte $l$ puis en appliquant l'algorithme d'emballage cadeau à la cavité formée.
+Pour insérer un sommet à l'extérieur d'un maillage Delaunay, il suffit d'ajouter certains triangles au bord du maillage à modifier et d'appeler la procédure Bowyer-Watson dans un ancien triangle du bord qui ne satisfait plus la propriété du cercle vide.
+
+Pour ajouter un nouveau sommet dans une triangulation de Delaunay contrainte, il suffit d'invoquer l'algorithme de Bowyer-Watson mais en ne permettant à la procédure de se déplacer uniquement de triangle en triangle adjacent si l'arête frontière à traverser n'est pas un segment. De plus un cas particulier doit être traité : lorsque le nouveau sommet à insérer se situe sur un segment, il faut aussi diviser ce segment en deux autres segments et penser à appeler la procédure de Bowyer-Watson de part et d'autre de l'ancien segment.
+
+Enfin, on peut ajouter un segment $l$ à une triangulation de Delaunay contrainte en supprimant toutes les arêtes dont l'intérieur intersecte $l$ puis en appliquant l'algorithme d'emballage cadeau aux deux cavités formées qui se touchent selon $l$.
 
 \vspace{1cm}
 \subsubsection{Bibliographie et mise en \oe{}uvre informatique}
@@ -190,11 +193,11 @@ Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente 
 
 
 
-Un certain nombre de mécanismes du C++ ont été utilisés pour ajouter de la clarté au projet. Chaque module de la bibliothèque contient plusieurs fichiers sources et en-têtes où sont définies des classes, les interactions entre ces dernières étant régies par l'ajout de méthodes, le réglage des visibilités des membres données où encore par une technique de création de clé, nécessaire pour invoquer une méthode, mais que seules certaines classes peuvent se procurer. Dans la mesure du possible, les concepts étaient modélisés par des classes ; les méthodes qui prenaient en argument une fonction étaient codées comme des patrons que l'on utilisait par exemple grâce à des \emph{lambda}.
+Un certain nombre de mécanismes du C++ ont été utilisés pour ajouter de la clarté au projet. Chaque module de la bibliothèque contient plusieurs fichiers sources et en-têtes où sont définies des classes, les interactions entre ces dernières étant régies par l'ajout de méthodes, le réglage des visibilités des membres de classes, ou encore par une technique de création de clé, nécessaire pour invoquer une méthode, mais que seules certaines classes peuvent se procurer. Dans la mesure du possible, les concepts étaient modélisés par des classes ; les méthodes qui prenaient en argument une fonction étaient codées comme des patrons que l'on utilisait par exemple grâce à des \emph{lambda}.
 
 La classe maillage manipule des indices pour référencer les sommets, demi-arêtes et faces, or la structure de données évolue beaucoup à cause d'ajouts et suppressions répétés d'éléments. Il a fallu donc avoir à disposition une classe \og vecteur à trous \fg{} qui gère elle-même la modification du contenu d'une zone mémoire contiguë : les cases vides sont réutilisées dès que possible et les indices permettant de retrouver les éléments des vecteurs restent inchangés pendant tout le programme.
 
-Les tests se sont avérés essentiels : un fichier de test par sous-projet a été écrit. On y appelle les méthodes publiques des classes principales pour construire par exemple des maillages simples, mais de temps en temps dans la mesure du possible on essaye de considérer plusieurs cas limites. Par exemple, différentes configurations ont été considérées pour vérifier si le programme parvenait à savoir quand les intérieurs de deux segments s'intersectaient.
+Les tests se sont avérés essentiels : un fichier de test par sous-projet a été écrit. On y appelle les méthodes publiques des classes principales pour construire par exemple des maillages simples, mais de temps en temps dans la mesure du possible on essaye de considérer plusieurs cas limites. On prépare aussi des \emph{tests unitaires} pour vérifier le bon fonctionnement d'algorithmes et structures de données, indépendamment des autres éléments du programme. Par exemple, différentes configurations ont été considérées pour vérifier si le programme parvenait à savoir quand deux segments ouverts s'intersectaient.
 
 \vspace{1cm}
 La gestion de version s'est faite grâce à l'outil Git \cite{Git}.
@@ -214,7 +217,7 @@ Des images sont fournies en annexe pour illustrer quelques résultats issus de l
 %bogues
 La principale difficulté a été la vérification des fonctions programmées par la visualisation des résultats obtenus. Différents logiciels ont été utilisés, comme Paraview, CloudCompare ou MeshLab \cite{Paraview, CloudCompare, MeshLab}, mais ils n'interprètent pas tous les mêmes formats de fichier et ils peuvent rendre compte des maillages très différemment. Par exemple, le format \verb+PLY+ permet de renseigner des couleurs attachées à des points, arêtes et faces ; cependant ces données ne sont pas toujours acceptées et souvent les éléments sont coloriés par interpolation des couleurs des extrémités, ce qui ne correspond pas tout le temps à ce que l'on veut obtenir. Néanmoins ces couleurs se sont révélées pratiques quand il a fallu afficher des propriétés comme celle d'être localement Delaunay pour une arête.
 
-De surcroît, certaines fonctions ne peuvent pas être visualisées simplement. Pour la structure en demi-arêtes, un bogue a été découvert pendant le deuxième mois du stage. En effet, un cas particulier n'avait pas été traité lorsque deux faces doivent être collées, et la connectivité était perdue parce que on ne pouvait parfois plus déduire toutes les arêtes incidentes à un sommet à partir de ce dernier.
+De surcroît, certaines fonctions ne peuvent pas être visualisées simplement. Pour la structure en demi-arêtes, un bogue a été découvert pendant le deuxième mois du stage. En effet, un cas particulier n'avait pas été traité lorsque deux faces doivent être collées, et la connectivité était perdue parce qu'on ne pouvait parfois plus déduire toutes les arêtes incidentes à un sommet à partir de ce dernier.
 
 Une dernière difficulté était l'adaptation d'algorithmes qui étaient exacts en théorie mais qui ne fonctionnaient pas bien en pratique à cause de l'arithmétique des nombres à virgule flottante. Quand un sommet à ajouter avec l'algorithme de Bowyer-Watson se situait très près d'un segment, il fallait prendre une décision : soit ajouter un triangle presque dégénéré, soit diviser le segment en deux autres segments. Or il n'est pas simple de savoir si le nouveau sommet appartient au segment ou pas, et comme des triangles très plats peuvent quand même apparaître dans une triangulation de Delaunay, il n'est pas non plus évident de savoir quand un triangle doit être jugé \og trop plat\fg{}.
 
@@ -276,7 +279,7 @@ Nombre moyen de méthodes par classe & $7,8$\\\hline
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=0.6, angle=90]{vf-schema-organisation-ifpen-marguerite.pdf}
-\caption{Schéma de l'organisation de l'IFPEN (source : intranet de l'IFPEN).}
+\caption{Schéma de l'organisation de IFPEN (source : intranet de IFPEN).}
 \label{ifpen_org}
 \end{center}
 \end{figure}
@@ -293,7 +296,13 @@ Nombre moyen de méthodes par classe & $7,8$\\\hline
 \begin{figure}[h]
 \begin{center}
 \includegraphics[scale=0.65]{locDel.jpg}
-\caption{Figure 2.7 de la source \cite{delnotes} : l'arête $e$ est localement Delaunay à gauche mais ne l'est pas à droite.}\label{locDelaunay}
+\caption{Figure 2.7 de la source \cite{delnotes} : l'arête $e$ est localement Delaunay à gauche mais ne l'est pas à droite.}\label{locDelaunay}\vspace{-3.5cm}\hspace{-10cm}A
+
+\vspace*{1.2cm}\hspace{-6cm}B
+
+\vspace*{-5.2cm}\hspace{-6cm}D
+
+\vspace*{2cm}\hspace{-2.7cm}C
 \end{center}
 \end{figure}
 
@@ -309,7 +318,7 @@ Nombre moyen de méthodes par classe & $7,8$\\\hline
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=0.35, viewport=530 0 1680 1129, clip]{del_vor.jpg}
-\caption{Triangulation de Delaunay d'un carré avec segments à la médiane horizontale (arêtes en bleu clair) et diagramme de Voronoï correspondant (arêtes en bleu foncé) (image obtenue avec Paraview).}
+\caption{Triangulation de Delaunay d'un carré avec segments disposés à la médiane horizontale (arêtes en bleu clair) et diagramme de Voronoï correspondant (arêtes en bleu foncé) (image obtenue avec Paraview).}
 \label{del_vor}
 \end{center}
 \end{figure}
