@@ -106,7 +106,8 @@ La propriété de ces maillages s'exprime aussi localement~: un maillage est Del
 Une illustration de la propriété d'être localement Delaunay pour une arête se trouve sur la figure \ref{locDelaunay}. On y aperçoit les mêmes points et presque les mêmes arêtes à gauche et à droite, cependant l'arête $e$ ne relie pas les mêmes sommets. \`A gauche, un cercle passant par les deux extrémités de $e=\mathrm{AC}$ n'englobe ni $\mathrm{B}$ ni $\mathrm{D}$, donc $e$ est localement Delaunay (les arêtes et sommets n'appartenant pas aux triangles $\mathrm{ACD}$ et $\mathrm{ABC}$ ne doivent pas être pris en compte). Quant au dessin de droite, le cercle circonscrit du triangle $\mathrm{ABD}$ englobe $\mathrm{C}$, donc $e=\mathrm{BD}$ n'est pas localement Delaunay.
 
 Lorsque l'on souhaite faire apparaître des arêtes spécifiques d'un ensemble $L$ dans le maillage à obtenir, on peut produire des maillages \emph{Delaunay contraints}~: il suffit pour cela de créer des maillages dont chaque arête est soit dans $L$, soit localement Delaunay. Les éléments de $L$ sont appelés des \emph{segments}. Plutôt que de mailler l'enveloppe convexe d'un nuage de point, on peut alors mailler un domaine qui n'est plus convexe et qui possède potentiellement des trous.
-Un triangle est dit \emph{Delaunay contraint} s'il satisfait la condition suivante : si son cercle circonscrit englobe un autre sommet du maillage, le triangle est \og caché \fg{} de ce sommet par un segment.
+Pour définir ce qu'est un triangle Delaunay contraint, définissons d'abord la notion de \emph{visibilité} : \emph{grosso modo}, deux sommets $x$ et $y$ sont visibles l'un de l'autre si le segment ouvert $xy$ n'est pas intersecté par un segment $l\in L$ tel que $l\neq xy$.
+Un triangle $\tau$ est alors dit \emph{Delaunay contraint} s'il satisfait la condition suivante : son cercle circonscrit n'englobe aucun sommet du maillage qui soit visible d'un point intérieur de $\tau$.
 \vspace{1cm}
 
 Le \emph{diagramme de Voronoï} d'un ensemble fini de points $V\subset\mathbb{R}^2$ est constitué d'un ensemble de cellules $V_p$ pour tout $p\in V$, définies par
@@ -122,12 +123,18 @@ Un exemple de diagramme de Voronoï obtenu avec la bibliothèque développée es
 
 Les maillages non structurés peuvent être représentés dans une structure compacte qui ne contient que les points ainsi que la liste des faces, elles-mêmes vues comme des listes de sommets. Mais une requête concernant des informations topologiques du maillage demande une préparation d'une autre structure de données représentant les adjacences, ce qui constitue un inconvénient majeur lorsque l'on veut des algorithmes efficaces~: par exemple, toute modification du maillage demande une mise à jour des informations d'adjacences.
 
-Afin d'obtenir rapidement des données sur la \emph{topologie} du maillage, la structure de données en demi-arêtes a été mise en \oe{}uvre~: cela consiste à représenter le maillage par un graphe plan orienté. Chaque arête donne naissance à deux demi-arêtes, opposées l'une à l'autre, chacune pointant vers l'une des extrémités de l'arête. Pour se déplacer à l'intérieur de la structure de données, chaque demi-arête $he$ intérieure à une face $f$ pointe vers une autre demi-arête qui part de la destination de $he$ et qui est intérieure à $f$, et chaque demi-arête correspondant au bord est considérée comme intérieure à une face fictive de \og peau \fg{} ; de plus chaque demi-arête fait référence à celle qui lui est opposée. Enfin chaque sommet $v$ pointe vers une demi-arête qui part de $v$.
+Afin d'obtenir rapidement des données sur la \emph{topologie} du maillage, la structure de données en demi-arêtes a été mise en \oe{}uvre~: cela consiste à représenter le maillage par un graphe plan orienté. Chaque arête donne naissance à deux demi-arêtes, opposées l'une à l'autre, chacune pointant vers l'une des extrémités de l'arête. Pour se déplacer à l'intérieur de la structure de données, chaque demi-arête $he$ intérieure à une face $f$ pointe vers 
+\begin{itemize}
+\item une demi-arête qui part de la destination de $he$ et qui est intérieure à $f$ : on la nomme demi-arête suivante ;
+\item la demi-arête qui lui est opposée, et qui est associée à la face $f'$ qui est adjacente à $f$ via l'arête matérialisée par $he$. Chaque demi-arête correspondant au bord est considérée comme intérieure à une face fictive de \og peau \fg{}.
+\end{itemize}
+Enfin chaque sommet $v$ pointe vers une demi-arête qui part de $v$.
 
 Ainsi, il est aisé de se déplacer dans le maillage et l'on a accès instantanément à des informations topologiques. Par exemple, on peut facilement parcourir une partie de bord du maillage, connaître les voisins d'un sommet et les arêtes qui lui sont incidentes.
 
 Les algorithmes de génération de maillage ont été écrits en tenant compte des avantages de cette structure.
 
+La figure \ref{half_edge} illustre la structure en demi-arêtes.
 
 
 \subsubsection{Structure de données accélératrice}
@@ -169,9 +176,9 @@ S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité d
 
 Pour insérer un sommet à l'extérieur d'un maillage Delaunay, il suffit d'ajouter certains triangles au bord du maillage à modifier et d'appeler la procédure Bowyer-Watson dans un ancien triangle du bord qui ne satisfait plus la propriété du cercle vide.
 
-Pour ajouter un nouveau sommet dans une triangulation de Delaunay contrainte, il suffit d'invoquer l'algorithme de Bowyer-Watson mais en ne permettant à la procédure de se déplacer uniquement de triangle en triangle adjacent si l'arête frontière à traverser n'est pas un segment. De plus un cas particulier doit être traité : lorsque le nouveau sommet à insérer se situe sur un segment, il faut aussi diviser ce segment en deux autres segments et penser à appeler la procédure de Bowyer-Watson de part et d'autre de l'ancien segment.
+Pour ajouter un nouveau sommet dans une triangulation de Delaunay contrainte, il suffit d'invoquer l'algorithme de Bowyer-Watson, mais en permettant à la procédure de se déplacer de triangle en triangle adjacent uniquement lorsque l'arête frontière à traverser n'est pas un segment. De plus un cas particulier doit être traité : lorsque le nouveau sommet à insérer se situe sur un segment, il faut aussi diviser ce segment en deux autres segments et penser à appeler la procédure de Bowyer-Watson de part et d'autre de l'ancien segment.
 
-Enfin, on peut ajouter un segment $l$ à une triangulation de Delaunay contrainte en supprimant toutes les arêtes dont l'intérieur intersecte $l$ puis en appliquant l'algorithme d'emballage cadeau aux deux cavités formées qui se touchent selon $l$.
+Enfin, on peut ajouter un segment $l$ à une triangulation de Delaunay contrainte en supprimant toutes les arêtes dont l'intérieur intersecte $l$ puis en appliquant l'algorithme d'emballage cadeau aux deux cavités formées qui se touchent selon $l$. Une illustration de cette insertion de segment apparaît sur la figure \ref{inserting_a_segment}.
 
 \vspace{1cm}
 \subsubsection{Bibliographie et mise en \oe{}uvre informatique}
@@ -184,7 +191,7 @@ La bibliothèque logicielle à créer a été programmée en C++ à l'aide de l'
 Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente ici~:
 \begin{description}
 \item[noyau géométrique (GeometricCore)]~: cela permet d'effectuer des calculs en géométrie. La bibliothèque Eigen \cite{Eigen} écrite en C++ a été incorporée au projet pour faire de l'algèbre linéaire ;
-\item[maillages bidimensionnels (MeshCore)]~: on utilise la structure en demi-arêtes pour représenter les maillages dans le plan. D'autres classes modélisant des concepts ayant traits aux maillages y figurent, comme des propriétés concernant des faces ou des arêtes ;
+\item[maillages bidimensionnels (MeshCore)]~: on utilise la structure en demi-arêtes pour représenter les maillages dans le plan. D'autres classes modélisant des concepts ayant trait aux maillages y figurent, comme des propriétés concernant des faces ou des arêtes ;
 \item[entrées/sorties (MeshIO)]~: afin de visualiser ou réutiliser des maillages, l'importation et/ou l'exportation a été codée pour les formats \verb+OBJ+, \verb+PLY+ et \verb+XDMF+\footnotemark \footnotetext{\texttt{XDMF} (eXtensible Data Model and Format) est un dialecte de \texttt{XML} permettant de renseigner des polyèdres généraux. Le format est décrit à l'adresse \url{http://www.xdmf.org/index.php/XDMF\_Model\_and\_Format} .} ;
 \item[Delaunay]~: ce projet fournit des algorithmes pour générer des triangulations de Delaunay et de Delaunay contraintes ;
 \item[Voronoï]~: ce projet permet de calculer des diagrammes de Voronoï ;
@@ -209,7 +216,7 @@ D'autres références à propos des maillages ont été lues : certaines décriv
 
 \subsection{Résultats}
 
-Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement peut être engendrée en moins de $40$ secondes.
+Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement peut être engendrée en moins de $40$ secondes. La plupart du temps, lorsqu'un grand nombre de points devaient être insérés dans un maillage, la position des points était tirée aléatoirement de façon uniforme, mais aussi de manière à éviter que des points ne se situent au bord du domaine et conduisent à la création de triangles dégénérés.
 
 \subsection{Problèmes rencontrés}
 
@@ -226,9 +233,11 @@ Une dernière difficulté était l'adaptation d'algorithmes qui étaient exacts 
 
 Le travail effectué pendant ce stage m'a permis, d'une part, de me perfectionner en programmation en réfléchissant pendant plusieurs mois à l'élaboration d'une bibliothèque, et d'autre part, de découvrir des méthodes pour générer et représenter des maillages 2D et 3D.
 
+La dépendance des formes des cellules de Voronoï vis-à-vis des sommets des triangulations de Delaunay n'a pas été étudiée. Or le placement des sommets pour lesquels on génère le diagramme de Voronoï est crucial pour obtenir de bons rapports de forme des mailles. Bien positionner les sommets de départ permet en outre de s'éloigner des conditions qui amènent par exemple au problème d'ajout de sommet près d'un segment, décrit à la sous-section précédente. Il sera peut-être nécessaire de s'intéresser à des méthodes d'optimisation de maillages si la qualité des premiers maillages volumiques n'est pas satisfaisante.
+
 Grâce aux difficultés rencontrées, théoriques et pratiques, je peux à présent mieux mesurer la complexité de la mission dans laquelle s'inscrit la thèse correspondante. Cette dernière sera l'occasion de trouver de bonnes propriétés pour des maillages 3D polyédriques, afin de résoudre des équations aux dérivées partielles modélisant des écoulements en milieu poreux.
 
-Enfin, ce stage constitue une expérience professionnelle supplémentaire qui m'a fait connaître une entreprise dont les missions liées au domaines de l'énergie et de l'environnement sont d'actualité et font partie d'un secteur d'avenir.
+Enfin, ce stage constitue une expérience professionnelle supplémentaire qui m'a fait connaître une entreprise dont les missions liées aux domaines de l'énergie et de l'environnement sont d'actualité et font partie d'un secteur d'avenir.
 
 \newpage
 \section{Annexes}
@@ -306,6 +315,24 @@ Nombre moyen de méthodes par classe & $7,8$\\\hline
 \end{center}
 \end{figure}
 
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=0.5]{halfEdge.jpg}
+\caption{Représentation avec demi-arêtes d'un maillage contenant six polygones : les demi-arêtes correspondent aux flèches bleues. Ici on a indiqué la demi-arête suivante (\emph{next}) et opposée (\emph{opp}) pour deux demi-arêtes $\mathrm{he}_1$ et $\mathrm{he}_2$.}
+\label{half_edge}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=0.4]{insertingASegment.jpg}
+\caption{Figure 2.16 de la source \cite{delnotes} : de gauche à droite, on identifie les arêtes intersectées par le nouveau segment $l$ en pointillés, on supprime ensuite ces arêtes puis on triangule les deux cavités qui se trouvent de part et d'autre de $l$. Parfois, comme dans le dessin du milieu, il reste des arêtes isolées qui sont en fait des segments, qui doivent bien sûr apparaître dans le résultat final.}
+\label{inserting_a_segment}
+\end{center}
+\end{figure}
+%\clearpage
 
 \begin{figure}[t]
 \begin{center}
