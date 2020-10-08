@@ -218,6 +218,8 @@ D'autres références à propos des maillages ont été lues : certaines décriv
 
 Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement peut être engendrée en moins de $40$ secondes. La plupart du temps, lorsqu'un grand nombre de points devaient être insérés dans un maillage, la position des points était tirée aléatoirement de façon uniforme, mais aussi de manière à éviter que des points ne se situent au bord du domaine et conduisent à la création de triangles dégénérés.
 
+Certaines figures ont été créées grâce au format \verb+PLY+ : sur la figure \ref{cut_segments} on constate la préservation des segments dans un maillage Delaunay contraint. Quant aux figures \ref{simple_Delaunay}, \ref{two_segments} et \ref{five_segments}, elles mettent en évidence la capacité du programme à ajouter des segments dans un maillage Delaunay, contraint ou non.
+
 \subsection{Problèmes rencontrés}
 
 %visualisation-couleurs
@@ -342,6 +344,38 @@ Nombre moyen de méthodes par classe & $7,8$\\\hline
 \end{center}
 \end{figure}
 
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=0.35, viewport=530 0 1680 1129, clip]{cutSegments.jpg}
+\caption{Maillage Delaunay contraint dont les segments d'origine ont été divisés par ajout de sommets. On distingue encore la diagonale et le côté gauche du carré est resté bien rectiligne. Les arêtes coloriées en vert sont localement Delaunay.}\label{cut_segments}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=0.35, viewport=500 0 1680 1129, clip]{simpleDelaunay.jpg}
+\caption{Maillage Delaunay d'un carré, auquel des segments vont être ajoutés.}\label{simple_Delaunay}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=0.35, viewport=500 0 1680 1129, clip]{two_segments.jpg}
+\caption{Maillage Delaunay contraint contenant deux segments (coloriés en vert, sous Paraview), obtenu par modification de la triangulation de la figure \ref{simple_Delaunay}. On constate que les changements effectués sont locaux puisque les triangles de la précédente triangulation qui sont loin des segments ont été conservés.}\label{two_segments}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=0.35, viewport=500 0 1680 1129, clip]{segments.jpg}
+\caption{Maillage Delaunay contraint contenant cinq segments (coloriés en vert, sous Paraview), obtenu par modification de la triangulation de la figure \ref{two_segments}. On remarque la présence de triangles très plats près de ceux-ci, à tel point que les trois nouveaux segments sont chacun presque confondus avec d'autres arêtes.}\label{five_segments}
+\end{center}
+\end{figure}
+
+
+
+
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=0.35, viewport=530 0 1680 1129, clip]{del_vor.jpg}
@@ -352,7 +386,7 @@ Nombre moyen de méthodes par classe & $7,8$\\\hline
 
 
 \begin{center}
-\begin{figure}[t]
+\begin{figure}[htbp]
 \includegraphics[scale=0.35, viewport=530 0 1680 1129, clip]{sq_del_vor.jpg}
 \caption{Domaine non convexe (en gris) : triangulation de Delaunay (arêtes en blanc) et diagramme de Voronoï étendu correspondant (arêtes en marron) (image obtenue avec Paraview). Les cellules de Voronoï ne sont pas nécessairement convexes.}
 \label{sq_del_vor}
