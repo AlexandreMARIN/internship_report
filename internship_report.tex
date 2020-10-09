@@ -159,18 +159,18 @@ On peut citer quatre grandes familles d'algorithmes de génération de maillage 
 
 Dans la bibliothèque à concevoir, on a ajouté des algorithmes qui construisent des maillages de Delaunay, contraints ou non. On y trouve les deux algorithmes principaux suivants.
 
-\paragraph{\indent Algorithme de Bowyer-Watson}\label{Bowyer-Watson} : cette procédure transforme un maillage Delaunay en une autre triangulation de Delaunay en insérant un nouveau sommet, par retriangulation locale. Les étapes sont :
+\paragraph{\indent Algorithme de Bowyer-Watson}\label{Bowyer-Watson} : cette procédure incrémentale transforme un maillage Delaunay en une autre triangulation de Delaunay en insérant un nouveau sommet, par retriangulation locale. Les étapes sont :
 \begin{enumerate}
 \item localisation du nouveau sommet $s$ : trouver un triangle $\tau$ dont le cercle circonscrit contient $s$ ;
 \item à partir de $\tau$, trouver de proche en proche tous les triangles qui ne satisfont plus la propriété du cercle vide à cause de $s$ ;
 \item suppression des triangles trouvés ;
 \item retriangulation de la cavité formée : chaque nouveau triangle doit avoir $s$ pour sommet et avoir une arête de la cavité pour côté.
 \end{enumerate}
-Avec une procédure de localisation efficace, on peut espérer une complexité en $O(n\log n)$, avec $n$ le nombre de sommets du maillage.
+Avec une procédure de localisation efficace, on peut espérer une complexité en $O(n\log n)$, avec $n$ le nombre de sommets du maillage. Cet algorithme est plus rapide que celui présenté ci-après mais il nécessite d'avoir d'abord à disposition un maillage Delaunay. Par conséquent un domaine $D$ non convexe ne peut être maillé par cette procédure que si l'on est prêt à mailler un autre domaine $D'$ qui inclut $D$, dont il faut ensuite enlever les triangles qui n'appartiennent à $D$.
 
 \paragraph{\indent Emballage cadeau (\emph{Gift-Wrapping})} : c'est un algorithme issu de la première classe citée qui maille un domaine défini par des polygones, des arêtes et des points, les éléments des deux derniers types devant apparaître dans le résultat. Le principe consiste à ajouter au fur et à mesure des triangles Delaunay contraints. Pour cela, on considère un ensemble $\mathcal{A}$ contenant des arêtes (orientées), initialisé au début avec les arêtes du bord du domaine. L'ensemble $\mathcal{A}$ est mis à jour à chaque insertion de triangle en fonction de ses côtés. L'algorithme prend fin lorsque $\mathcal{A}$ est vide, sinon une autre itération commence avec une arête $e\in\mathcal{A}$ et l'on cherche un sommet en entrée qui va former avec $e$ un triangle Delaunay contraint.
 
-S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité de cet algorithme est en $O(n^{2}m)$.
+S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité de cet algorithme est en $O(n^{2}m)$. Le principal avantage de cet algorithme est de pouvoir mailler directement un domaine qui n'est plus nécessairement convexe, cependant il peut être ralenti par de nombreux tests d'intersections et en pratique, le maillage résultant peut aussi contenir des trous.
 
 \paragraph{Variantes} : on peut s'inspirer des algorithmes précédents pour insérer autrement un nouveau sommet dans une triangulation Delaunay (contrainte ou non) tout en conservant la propriété de Delaunay.
 
@@ -216,7 +216,7 @@ D'autres références à propos des maillages ont été lues : certaines décriv
 
 \subsection{Résultats}
 
-Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement peut être engendrée en moins de $40$ secondes. La plupart du temps, lorsqu'un grand nombre de points devaient être insérés dans un maillage, la position des points était tirée aléatoirement de façon uniforme, mais aussi de manière à éviter que des points ne se situent au bord du domaine et conduisent à la création de triangles dégénérés.
+Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement peut être engendrée en moins de $10$ secondes. La plupart du temps, lorsqu'un grand nombre de points devaient être insérés dans un maillage, la position des points était tirée aléatoirement de façon uniforme, mais aussi de manière à éviter que des points ne se situent au bord du domaine et conduisent à la création de triangles dégénérés.
 
 Certaines figures ont été créées grâce au format \verb+PLY+ : sur la figure \ref{cut_segments} on constate la préservation des segments dans un maillage Delaunay contraint. Quant aux figures \ref{simple_Delaunay}, \ref{two_segments} et \ref{five_segments}, elles mettent en évidence la capacité du programme à ajouter des segments dans un maillage Delaunay, contraint ou non.
 
