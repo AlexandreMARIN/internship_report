@@ -59,7 +59,7 @@ Direction Sciences et Technologies du Numérique -- Département Informatique Sc
 \subsection{Objectifs}
 \begin{Energie}{Objectifs}
 
-Premier objectif : faire un travail bibliographique et développer un mailleur polyédrique 3D, censé être adapté à la simulation d'écoulements dans le sous-sol.
+Premier objectif : faire un travail bibliographique et développer des structures de données et algorithmes pour un mailleur polyédrique 3D, censé être adapté à la simulation d'écoulements dans le sous-sol.
 \\[1cm]
 Objectif retenu : s'approprier des concepts sur la génération de maillages 2D et mettre en \oe{}uvre certains algorithmes en programmant une bibliothèque logicielle.
 \end{Energie}
@@ -87,7 +87,7 @@ Octobre & Seconde étude bibliographique\\
 \label{biblio}
 \end{Energie}
 
-\begin{Energie}{Bibliothèque logicielle programmée}
+\begin{Energie}{Bibliothèque logicielle programmée (C++)}
 \begin{center}
 \usetikzlibrary {shapes.geometric}
 \begin{tikzpicture}[fill=blue!20]
@@ -113,7 +113,7 @@ Octobre & Seconde étude bibliographique\\
 \end{tikzpicture}
 \label{archi}
 
-Architecture du projet
+Architecture du projet (sous QtCreator)
 \end{center}
 \end{Energie}
 
@@ -122,8 +122,18 @@ Architecture du projet
 Elle concerne
 
 \begin{itemize}
-\item des structures de données représentant des maillages 3D polyédriques
-\item des méthodes de génération de maillages polyédriques pour des simulations en géosciences
+\item des structures de données représentant des maillages 3D polyédriques :
+\begin{itemize}
+\item demi-arêtes
+\item cartes combinatoires
+\item $\mathcal{G}$-cartes
+\item $n$-cartes
+\end{itemize}
+\item des méthodes de génération de maillages polyédriques pour des simulations en géosciences :
+\begin{itemize}
+\item par résolution de problèmes d'optimisation
+\item par des algorithmes de raffinement
+\end{itemize}
 \end{itemize}
 \end{Energie}
 
@@ -193,5 +203,13 @@ Ce stage m'a permis de
 \end{Energie}
 
 \makeByeSlide
+
+\begin{Energie}{\small Bibliographie additionnelle}
+
+{\tiny
+\begin{btSect}{additional.bib}
+\btPrintNotCited
+\end{btSect}}
+\end{Energie}
 
 \end{document}
