@@ -1,0 +1,276 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{IFPENPresentation}[13/02/2019 v0]
+
+\def\englishlang{anglais}
+\def\frenchlang{francais}
+
+\def\imgnameEN@eng{./figures/New_energies}
+\def\imgnameHR@eng{./figures/Resp_oilgas}
+\def\imgnameMD@eng{./figures/Sustainable_mobility}
+\def\imgnameBye@eng{./figures/Innovating}
+\def\imgnameEN@fr{./figures/Energies_nouvelles}
+\def\imgnameHR@fr{./figures/hydro_resp}
+\def\imgnameMD@fr{./figures/Mobilite_durable}
+\def\imgnameBye@fr{./figures/Innovation}
+
+
+\newif\ifenglish \englishfalse
+\DeclareOption{anglais}{
+\englishtrue
+\def\main@environlang{\englishlang}
+    \def\imgnameEN{\imgnameEN@eng}
+    \def\imgnameHR{\imgnameHR@eng}
+    \def\imgnameMD{\imgnameMD@eng}
+    \def\imgnameBye{\imgnameBye@eng}
+}
+
+\newif\iffrench \frenchfalse
+\DeclareOption{francais}{
+\frenchtrue
+\def\main@environlang{\frenchlang}
+    \def\imgnameEN{\imgnameEN@fr}
+    \def\imgnameHR{\imgnameHR@fr}
+    \def\imgnameMD{\imgnameMD@fr}
+    \def\imgnameBye{\imgnameBye@fr}
+}
+
+\DeclareOption*{}%% Ne rien faire quand une option est inconnue
+\ExecuteOptions{\frenchlang}
+\ProcessOptions\relax
+
+%\DeclareBoolOption[false]{english}       % automatically creates \ifmypackage@fullpage
+%\DeclareComplementaryOption{french}{english}  % automatically inverses the former
+%\ProcessKeyvalOptions*{}
+
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,snakes}
+\RequirePackage{environ}
+\RequirePackage{xstring}
+
+%Suppression des bouttons de navigation
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+
+% Enumération des sections/subsections
+\setbeamertemplate{section in toc}[sections numbered]
+%\setbeamertemplate{subsection in toc}[subsections numbered]
+
+% Définition des couleurs coorporate
+\definecolor{IFPENBlue}{rgb}{0, 0.43, 0.72}
+\definecolor{IFPENBlueBullet}{rgb}{0.35, 0.60, 0.83}
+\definecolor{IFPENGreen}{rgb}{0.66,    0.78,    0}
+\definecolor{IFPENPurple}{rgb}{0.47,    0.23,    0.55}
+\definecolor{IFPENOrange}{rgb}{0.86,    0.51,    0}
+
+
+% Definition des bullets selon les sections 
+\newcommand{\BlueBullet}{
+\begin{tikzpicture}
+\filldraw[fill=IFPENBlueBullet,line width=0.35mm, draw=IFPENBlue] circle (3pt);
+\end{tikzpicture}
+}
+
+\newcommand{\GreenBullet}{
+\begin{tikzpicture}
+\filldraw[fill=IFPENGreen,line width=0.35mm, draw=IFPENBlue] circle (3pt);
+\end{tikzpicture}
+}
+
+\newcommand{\OrangeBullet}{
+\begin{tikzpicture}
+\filldraw[fill=IFPENOrange,line width=0.35mm, draw=IFPENBlue] circle (3pt);
+\end{tikzpicture}
+}
+
+\newcommand{\PurpleBullet}{
+\begin{tikzpicture}
+\filldraw[fill=IFPENPurple,line width=0.35mm, draw=IFPENBlue] circle (3pt);
+\end{tikzpicture}
+}
+
+
+%% Décalage vertical et horizontal du titre sur les slide du corps
+\addtobeamertemplate{frametitle}{\vskip.2cm~~~~~~~}{}
+
+
+%% Définition de la slide 'New energies' au format IFPEN
+\NewEnviron{Generic}[2][]{%
+\setbeamertemplate{logo}{
+    \tikz %[remember picture,overlay]
+    \node[anchor = south] at (current page.south west) {\tiny{\textcolor{IFPENBlue}{\insertframenumber\,/\,\inserttotalframenumber }\ \textcolor{IFPENBlue}{| \copyright \; 2019   IFPEN}} };
+		 \hspace{\dimexpr\paperwidth-5cm-5pt}%
+		\includegraphics[width=1.5cm,keepaspectratio]{./figures/IFPEN}
+}
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\BlueBullet}}
+\setbeamertemplate{itemize subitem}{\tiny\raise1.5pt\hbox{\BlueBullet}}
+\setbeamertemplate{itemize subsubitem}{\tiny\raise1.5pt\hbox{\BlueBullet}}
+\begin{frame}{#2}    
+    \tikz [remember picture,overlay]  
+    \node at ([xshift=-7.15cm,yshift=-.5cm]current page.north) [inner sep=0pt,draw=none,fill=IFPENBlueBullet,minimum width=.125cm,minimum height=1.0cm] {};
+	\vspace{-.8cm}
+    \BODY
+\end{frame}
+}
+%
+
+
+%% Définition de la slide 'New energies' au format IFPEN
+\NewEnviron{Energie}[2][\main@environlang]{%
+\IfStrEq{#1}{\main@environlang}%
+  {\def\imgnameEND{\imgnameEN}}%
+  {\IfStrEq{#1}{\englishlang}%
+    {\def\imgnameEND{\imgnameEN@eng}}%
+    {\def\imgnameEND{\imgnameEN@fr}}
+  }
+
+\setbeamertemplate{logo}{
+    \tikz %[remember picture,overlay]
+    \node[anchor = south] at (current page.south west) {\tiny{\textcolor{IFPENBlue}{\insertframenumber\,/\,\inserttotalframenumber }\ \textcolor{IFPENBlue}{| \copyright \;  2019  IFPEN}} };
+		 \hspace{\dimexpr\paperwidth-5cm-5pt}%
+		\includegraphics[width=1.5cm,keepaspectratio]{./figures/IFPEN}
+}
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\GreenBullet}}
+\setbeamertemplate{itemize subitem}{\tiny\raise1.5pt\hbox{\GreenBullet}}
+\setbeamertemplate{itemize subsubitem}{\tiny\raise1.5pt\hbox{\GreenBullet}}
+\begin{frame}{#2}
+    \tikz [remember picture,overlay]
+    \node at ([xshift=6.25cm,yshift=-.8cm]current page.north) {\includegraphics[width=.25\textwidth]{\imgnameEND}};
+    \tikz [remember picture,overlay]  
+    \node at ([xshift=-7.15cm,yshift=-.5cm]current page.north) [inner sep=0pt,draw=none,fill=IFPENGreen,minimum width=.125cm,minimum height=1.0cm] {};
+	\vspace{-.8cm}
+    \BODY
+\end{frame}
+}
+
+%% Définition de la slide 'responsible hydro' au format IFPEN
+\NewEnviron{Hydrocarbure}[2][\main@environlang]{%
+\IfStrEq{#1}{\main@environlang}%
+  {\def\imgnameHRD{\imgnameHR}}%
+  {\IfStrEq{#1}{\englishlang}%
+    {\def\imgnameHRD{\imgnameHR@eng}}%
+    {\def\imgnameHRD{\imgnameHR@fr}}
+  }
+
+\setbeamertemplate{logo}{
+    \tikz %[remember picture,overlay]
+    \node[anchor = south] at (current page.south west) {\tiny{\textcolor{IFPENBlue}{\insertframenumber\,/\,\inserttotalframenumber }\ \textcolor{IFPENBlue}{| \copyright \;  2019  IFPEN}} };
+		 \hspace{\dimexpr\paperwidth-5cm-5pt}%
+		\includegraphics[width=1.5cm,keepaspectratio]{./figures/IFPEN}
+}
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\OrangeBullet}}
+\setbeamertemplate{itemize subitem}{\tiny\raise1.5pt\hbox{\OrangeBullet}}
+\setbeamertemplate{itemize subsubitem}{\tiny\raise1.5pt\hbox{\OrangeBullet}}
+\begin{frame}{#2}
+    \tikz [remember picture,overlay]
+    \node at ([xshift=6.25cm,yshift=-.8cm]current page.north) {\includegraphics[width=.25\textwidth]{\imgnameHRD}};
+    \tikz [remember picture,overlay]  
+    \node at ([xshift=-7.15cm,yshift=-.5cm]current page.north) [inner sep=0pt,draw=none,fill=IFPENOrange,minimum width=.125cm,minimum height=1.0cm] {};
+	\vspace{-.8cm}
+    \BODY
+\end{frame}
+}
+
+
+%% Définition de la slide 'Sustainable mobility' au format IFPEN
+\NewEnviron{Mobilite}[2][\main@environlang]{%
+\IfStrEq{#1}{\main@environlang}%
+  {\def\imgnameMDD{\imgnameMD}}%
+  {\IfStrEq{#1}{\englishlang}%
+    {\def\imgnameMDD{\imgnameMD@eng}}%
+    {\def\imgnameMDD{\imgnameMD@fr}}
+  }
+
+\setbeamertemplate{logo}{
+    \tikz %[remember picture,overlay]
+    \node[anchor = south] at (current page.south west) {\tiny{\textcolor{IFPENBlue}{\insertframenumber\,/\,\inserttotalframenumber }\ \textcolor{IFPENBlue}{| \copyright \; 2019  IFPEN}} };
+		 \hspace{\dimexpr\paperwidth-7cm-6pt}%
+		\includegraphics[width=3.55cm,keepaspectratio]{./figures/IFPEN_Carnot}
+}
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\PurpleBullet}}
+\setbeamertemplate{itemize subitem}{\tiny\raise1.5pt\hbox{\PurpleBullet}}
+\setbeamertemplate{itemize subsubitem}{\tiny\raise1.5pt\hbox{\PurpleBullet}}
+\begin{frame}{#2}
+    \tikz [remember picture,overlay]
+    \node at ([xshift=6.25cm,yshift=-.8cm]current page.north) {\includegraphics[width=.25\textwidth]{\imgnameMDD}};
+    \tikz [remember picture,overlay]  
+    \node at ([xshift=-7.15cm,yshift=-.5cm]current page.north) [inner sep=0pt,draw=none,fill=IFPENPurple,minimum width=.125cm,minimum height=1.0cm] {};
+	\vspace{-.8cm}
+    \BODY
+\end{frame}
+}
+
+
+%% Définition de la slide de fin au format IFPEN
+\NewEnviron{EndFrame}[1][\main@environlang]{%
+\IfStrEq{#1}{\main@environlang}%
+  {\def\imgnameByeD{\imgnameBye}}%
+  {\IfStrEq{#1}{\englishlang}%
+    {\def\imgnameByeD{\imgnameBye@eng}}%
+    {\def\imgnameByeD{\imgnameBye@fr}}
+  }
+
+\setbeamertemplate{logo}{}
+\begin{frame}
+    \BODY
+    \tikz [remember picture,overlay]
+    \node at ([xshift=0cm,yshift=0cm]current page.center) {\includegraphics[width=\textwidth]{\imgnameByeD}};    
+    \tikz [remember picture,overlay]
+    \node[anchor=south] at (current page.south) {\includegraphics[width=.2\textwidth]{./figures/IFPEN}};    
+    \tikz [remember picture,overlay]
+    \node[anchor = south] at ([xshift=2.1cm,yshift=0.25cm]current page.south west) {\tiny{\insertframenumber\,/\,\inserttotalframenumber \ \textcolor{IFPENBlue}{| \copyright \; 2019  IFPEN}}};         
+\end{frame}
+}
+
+% Définition de la page de titre
+\defbeamertemplate*{title page}{customized}[1][]
+{
+  \usebeamerfont{title}\usebeamercolor[IFPENBlue]{subtitle}\begin{center}
+  \inserttitle\par
+  \end{center}
+  \vspace{-.5cm}
+  
+  \textcolor{IFPENBlue}{\rule{\linewidth}{0.7pt}}
+  
+  \usebeamerfont{author}\usebeamercolor[black]{author}
+  \begin{center}
+  \insertauthor\par
+  \end{center}
+  
+  \usebeamerfont{institute}\usebeamercolor[IFPENBlue]{institute}
+  \begin{center}
+  \insertinstitute\par
+  \end{center}
+  
+  \usebeamerfont{date}\usebeamercolor[black]{date}\insertdate\par
+  \usebeamerfont{subtitle}\usebeamercolor[black]{subtitle}\insertsubtitle\par
+  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+  
+    \tikz [remember picture,overlay]
+    \node[anchor = south] at
+        (current page.south) 
+        %or: (current page.center)
+        {\includegraphics[width=.25\textwidth]{./figures/IFPEN}};
+    }
+
+%% Définition des bullet itemize / enumerate
+
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+\setbeamertemplate{enumerate subsubitem}{\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
+\setbeamertemplate{enumerate mini template}{\insertenumlabel}
+
+%\def\makeByeSlide[#1]{%
+%\begin{EndFrame}{#1}
+%\end{EndFrame}
+%}
+
+\DeclareRobustCommand\makeByeSlide{\@ifnextchar[{\@@makeByeSlide}{\@makeByeSlide}}
+\def\@@makeByeSlide[#1]{%
+\begin{EndFrame}[#1]
+\end{EndFrame}
+}
+\def\@makeByeSlide{%
+\begin{EndFrame}
+\end{EndFrame}
+}
+
+\endinput
