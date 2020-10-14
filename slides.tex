@@ -17,7 +17,8 @@
 \usepackage[defaultbib]{bibtopic}
 %\renewcommand{\thesection}{\arabic{section}}
 
-\graphicspath{{figures/}}
+\graphicspath{{figures/}{pictures/}}
+
 
 
 \begin{document}
@@ -46,7 +47,7 @@ Direction Sciences et Technologies du Numérique -- Département Informatique Sc
 \item un EPIC
 \item $\approx 50$\% de son budget issu de l'\'Etat
 \item un groupe employant $1\ 600$ salariés
-\item conçoit et développe des procédés, équipements et logiciels relatifs à quatre domaines :
+\item conçoit et développe des procédés, équipements et logiciels relatifs à quatre domaines :\setbeamertemplate{items}[square]
 \begin{itemize}
 \item la mobilité durable
 \item les énergies renouvelables
@@ -74,6 +75,50 @@ Août & Réorganisation du code, génération de maillages Delaunay contraints, 
 Septembre & Création de diagrammes de Voronoï, rédaction du rapport\\
 Octobre & Seconde étude bibliographique\\
 \end{tabular}}
+\end{Energie}
+
+\begin{Energie}{Contexte}
+
+\begin{visibleenv}<1,3->
+La simulation d'écoulements dans le sous-sol nécessite des maillages tels que :
+\begin{itemize}
+\item<1,3,4,5> les éléments structuraux apparaissent
+\item<3-> certaines contraintes géométrique soient respectées\only<3>{ (régularité, conformité, orthogonalité$\dots$)}
+\end{itemize}
+\end{visibleenv}
+
+\begin{onlyenv}<2>
+\begin{center}\vspace{-1cm}
+\includegraphics[scale=0.27]{Analog.png}
+\\Exemple d'un ensemble d'horizons et de failles à respecter\\(source : \url{https://geoanalog.ifpen.fr/})
+\end{center}
+\end{onlyenv}
+
+\uncover<4->{\vspace{1cm} Avec des méthodes du type \emph{Volumes finis} ou \emph{\'Eléments virtuels}, il est possible d'utiliser des maillages polyédriques.}
+
+\uncover<5->{\vspace{1cm} Quelles sont les bonnes propriétés de tels maillages vis-à-vis de ces méthodes numériques ?}
+
+\end{Energie}
+
+\begin{Energie}{\small Quelques exemples de domaines géologiques}
+\begin{center}
+\includegraphics[scale=0.25]{thrusts.jpg}
+\\Modèle géologique reconstruit, failles inverses en bleu et failles transpressives en rouge (source : \cite{Sicily})
+\end{center}
+\end{Energie}
+
+\begin{Energie}{\small Quelques exemples de domaines géologiques}
+\begin{center}
+\includegraphics[scale=0.35]{thrustsHorizons.png}
+\\Modèle géologique reconstruit précédent, avec les horizons (source : \cite{Sicily})
+\end{center}
+\end{Energie}
+
+\begin{Energie}{\small Quelques exemples de domaines géologiques}
+\begin{center}
+\includegraphics[scale=0.25]{Clyde.png}
+\\Une faille principale décrochante, quelques failles de part et d'autre de celle-ci (source : \cite{TERTOIS_RM2020})
+\end{center}
 \end{Energie}
 
 \section{Mission du stage}
@@ -117,7 +162,17 @@ Architecture du projet (sous QtCreator)
 \end{center}
 \end{Energie}
 
-\begin{Energie}{Seconde étude bibliographique}
+\begin{Energie}{Structure en demi-arêtes}
+\begin{center}
+\includegraphics[scale=0.4]{../pictures/halfEdge.jpg}
+
+Légende :
+
+flèche bleue : demi-arête, rond : sommet, \texttt{opp} : demi-arête opposée, \texttt{next} : demi-arête suivante
+\end{center}
+\end{Energie}
+
+\begin{Energie}{Seconde étude bibliographique}\setbeamertemplate{itemize subitem}[square]
 
 Elle concerne
 
@@ -141,7 +196,7 @@ Elle concerne
 \begin{Energie}{Résultats}
 \begin{itemize}
 \item structure en demi-arêtes pour maillages bidimensionnels
-\item maillages polygonaux exportés dans $3$ formats (Delaunay, Voronoï) de domaines convexes ou non
+\item maillages polygonaux (Delaunay, Voronoï) exportés dans $3$ formats (OBJ, PLY, XDMF), de domaines du plan, convexes ou non
 \item temps de calcul diminué grâce à la structure d'arbre quaternaire
 \end{itemize}
 \end{Energie}
@@ -187,17 +242,17 @@ Elle concerne
 \end{Energie}
 
 \section{Conclusion}
-\begin{Energie}{Conclusion}
+\begin{Energie}{Conclusion}\setbeamertemplate{itemize subitem}[ball]
 
 Ce stage m'a permis de
 
 \begin{itemize}
-\item découvrir des concepts en génération de maillages, parfois pour les géosciences
-\item de préparer la thèse qui suit : 
+\item<1-> découvrir des concepts en génération de maillages, parfois pour les géosciences
+\item<2-> de préparer la thèse qui suit : 
 \begin{itemize}
-\item difficultés
-\item erreurs à ne pas reproduire
-\item bibliographie
+\item<3-> difficultés algorithmiques
+\item<4-> erreurs à ne pas reproduire (code, théorie)
+\item<5-> bibliographie
 \end{itemize}
 \end{itemize}
 \end{Energie}
@@ -210,6 +265,30 @@ Ce stage m'a permis de
 \begin{btSect}{additional.bib}
 \btPrintNotCited
 \end{btSect}}
+\end{Energie}
+
+\begin{Energie}{\small Sources des modèles géologiques}
+
+{\fontsize{10}{12}\selectfont
+\begin{btSect}{models.bib}
+\btPrintNotCited
+\btPrintCited
+\end{btSect}}
+\end{Energie}
+
+\begin{Energie}{Triangulation de Delaunay}
+\begin{center}
+\includegraphics[scale=0.55]{../pictures/delTri.jpg}
+\\figure 2.3 de la source \cite{delnotes}
+\end{center}
+\end{Energie}
+
+
+\begin{Energie}{Arête localement Delaunay}
+\begin{center}
+\includegraphics[scale=0.6]{locDel.jpg}
+\\figure 2.7 de la source \cite{delnotes}
+\end{center}
 \end{Energie}
 
 \end{document}
