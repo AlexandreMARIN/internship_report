@@ -74,7 +74,7 @@ En 2019, IFPEN comptait $1\ 633$ salariés à temps plein, dont $1\ 136$ ingéni
 
 IFPEN conçoit et développe des procédés, des équipements et des logiciels qui concernent quatre domaines : la mobilité durable, les énergies renouvelables, les hydrocarbures responsables, et le climat/l'environnement. Dans le domaine climat et environnement, l'une des problématiques est par exemple le captage, le stockage et l'utilisation du CO$_2$. Il s'agit de proposer aux industries lourdes (sidérurgie, cimenterie, raffinage, chimie, pétrochimie) des technologies pour réduire massivement leurs émissions de CO$_2$.
 
-IFPEN collabore avec d'autres instituts de recherche et industries dans le cadre de partenariats qui sont de différents types. IFPEN est ses partenaires financent conjointement un projet de recherche et définissent les règles de propriétés des résultats grâce aux contrats de recherches bilatéraux ou aux consortiums dont certains sont des Joint Industry Project (JIP) : IFPEN y opère le programme R\&I et conserve la propriété industrielle. IFPEN participe aussi à des projets de recherche collaborative qui bénéficient de soutiens publics.
+IFPEN collabore avec d'autres instituts de recherche et industries dans le cadre de partenariats qui sont de différents types. IFPEN et ses partenaires financent conjointement un projet de recherche et définissent les règles de propriété des résultats grâce aux contrats de recherche bilatéraux ou aux consortiums dont certains sont des Joint Industry Project (JIP) : IFPEN y opère le programme R\&I et conserve la propriété industrielle. IFPEN participe aussi à des projets de recherche collaborative qui bénéficient de soutiens publics.
 
 La plupart des entités de IFPEN, que l'on peut voir sur la figure \ref{ifpen_org}, se répartissent dans deux ensembles : \emph{les directions de recherche}, qui rassemblent les compétences scientifiques, et \emph{les directions fonctionnelles}, comme les ressources humaines, les finances ou le juridique.
 
@@ -97,7 +97,7 @@ Cependant le véritable but du stage était l'appropriation de concepts liés à
 
 \subsubsection{\'Eléments théoriques pour les maillages}
 
-On présente ici les triangulations de Delaunay, les triangulations de Delaunay contraintes pour mailler un domaine non nécessairement convexe, puis le dual des ces triangulations qui sont une piste pour l'obtention d'un maillage polyédrique ayant de bonnes propriétés.
+On présente ici les triangulations de Delaunay, les triangulations de Delaunay contraintes pour mailler un domaine non nécessairement convexe, puis le dual de ces triangulations qui sont une piste pour l'obtention d'un maillage polyédrique ayant de bonnes propriétés.
 \vspace{1cm}
 
 Une \emph{triangulation de Delaunay} d'un ensemble de points $V\subset\mathbb{R}^2$ est un maillage conforme de l'enveloppe convexe de $V$, constitué de triangles satisfaisant la propriété du cercle vide~: le disque ouvert défini par le cercle circonscrit d'un triangle ne doit contenir aucun sommet de $V$. Ces triangles sont dits alors Delaunay. Parmi toutes les triangulations de $V$, celles qui sont Delaunay maximisent la valeur du plus petit angle formé par deux arêtes~: ce sont donc, pour cet ensemble $V$ et du point de vue de la qualité des mailles, les \og meilleures \fg{} triangulations. On peut voir un maillage Delaunay sur la figure \ref{delaunay}.
@@ -121,7 +121,7 @@ Un exemple de diagramme de Voronoï obtenu avec la bibliothèque développée es
 
 \subsubsection{Structure de données en demi-arêtes}
 
-Les maillages non structurés peuvent être représentés dans une structure compacte qui ne contient que les points ainsi que la liste des faces, elles-mêmes vues comme des listes de sommets. Mais une requête concernant des informations topologiques du maillage demande une préparation d'une autre structure de données représentant les adjacences, ce qui constitue un inconvénient majeur lorsque l'on veut des algorithmes efficaces~: par exemple, toute modification du maillage demande une mise à jour des informations d'adjacences.
+Les maillages non structurés peuvent être représentés dans une structure compacte qui ne contient que les points ainsi que la liste des faces, elles-mêmes vues comme des listes de sommets. Mais une requête concernant des informations topologiques du maillage demande une préparation d'une autre structure de données indiquant les adjacences, ce qui constitue un inconvénient majeur lorsque l'on veut des algorithmes efficaces~: par exemple, toute modification du maillage demande une mise à jour des informations d'adjacences.
 
 Afin d'obtenir rapidement des données sur la \emph{topologie} du maillage, la structure de données en demi-arêtes a été mise en \oe{}uvre~: cela consiste à représenter le maillage par un graphe plan orienté. Chaque arête donne naissance à deux demi-arêtes, opposées l'une à l'autre, chacune pointant vers l'une des extrémités de l'arête. Pour se déplacer à l'intérieur de la structure de données, chaque demi-arête $he$ intérieure à une face $f$ pointe vers 
 \begin{itemize}
@@ -141,7 +141,7 @@ La figure \ref{half_edge} illustre la structure en demi-arêtes.
 
 Les fonctions programmées étant censées générer de \og grands \fg{} maillages, des nuages de points très denses doivent être constitués~: la  complexité temporelle des algorithmes prend alors toute son importance. Par exemple, pour l'algorithme de Bowyer-Watson présenté en page \pageref{Bowyer-Watson}, la complexité dépend aussi d'une procédure de localisation de points dans une face du maillage ; dans le cas d'une recherche exhaustive, la complexité de l'étape de localisation est en $O(t)$, avec $t$ le nombre de triangles du maillage. On décide de remplacer cette procédure coûteuse en s'aidant d'un \emph{quadtree}, \emph{i.e.} un arbre quaternaire.
 
-Le principe de la recherche est le suivant~: au préalable, on part d'une boîte $B$ censée englober le maillage et on convient du nombre maximal d'éléments pouvant être contenus dans une feuille de l'arbre. Chaque n\oe{}ud de l'arbre représente une région rectangulaire qui est une portion de la boîte englobante $B$. Lorsque qu'une feuille contient trop d'éléments, on lui crée quatre fils qui correspondent chacun à un quart de la zone représentée par l'ancienne feuille, puis on répartit les éléments dans les nouvelles feuilles selon leur position dans la région. Ainsi, la complexité de la recherche d'un élément selon sa position est en $O(h_{\text{quadtree}})$, avec $h_{\text{quadtree}}$ la hauteur de l'arbre construit.
+Le principe de la recherche est le suivant~: au préalable, on part d'une boîte $B$ censée englober le maillage et on convient du nombre maximal d'éléments pouvant être contenus dans une feuille de l'arbre. Chaque n\oe{}ud de l'arbre représente une région rectangulaire qui est une portion de la boîte englobante $B$. Lorsqu'une feuille contient trop d'éléments, on lui crée quatre fils qui correspondent chacun à un quart de la zone représentée par l'ancienne feuille, puis on répartit les éléments dans les nouvelles feuilles selon leur position dans la région. Ainsi, la complexité de la recherche d'un élément selon sa position est en $O(h_{\text{quadtree}})$, avec $h_{\text{quadtree}}$ la hauteur de l'arbre construit.
 
 Une illustration d'un quadtree se trouve en figure \ref{quadtree}.
 
@@ -166,11 +166,11 @@ Dans la bibliothèque à concevoir, on a ajouté des algorithmes qui construisen
 \item suppression des triangles trouvés ;
 \item retriangulation de la cavité formée : chaque nouveau triangle doit avoir $s$ pour sommet et avoir une arête de la cavité pour côté.
 \end{enumerate}
-Avec une procédure de localisation efficace, on peut espérer une complexité en $O(n\log n)$, avec $n$ le nombre de sommets du maillage. Cet algorithme est plus rapide que celui présenté ci-après mais il nécessite d'avoir d'abord à disposition un maillage Delaunay. Par conséquent un domaine $D$ non convexe ne peut être maillé par cette procédure que si l'on est prêt à mailler un autre domaine $D'$ qui inclut $D$, dont il faut ensuite enlever les triangles qui n'appartiennent à $D$.
+Avec une procédure de localisation efficace, on peut espérer une complexité en $O(n\log n)$, avec $n$ le nombre de sommets du maillage. Cet algorithme est plus rapide que celui présenté ci-après mais il nécessite d'avoir d'abord à disposition un maillage Delaunay. Par conséquent un domaine $D$ non convexe ne peut être maillé par cette procédure que si l'on est prêt à mailler un autre domaine convexe $D'$ qui inclut $D$, dont il faut ensuite enlever les triangles qui n'appartiennent à $D$.
 
 \paragraph{\indent Emballage cadeau (\emph{Gift-Wrapping})} : c'est un algorithme issu de la première classe citée qui maille un domaine défini par des polygones, des arêtes et des points, les éléments des deux derniers types devant apparaître dans le résultat. Le principe consiste à ajouter au fur et à mesure des triangles Delaunay contraints. Pour cela, on considère un ensemble $\mathcal{A}$ contenant des arêtes (orientées), initialisé au début avec les arêtes du bord du domaine. L'ensemble $\mathcal{A}$ est mis à jour à chaque insertion de triangle en fonction de ses côtés. L'algorithme prend fin lorsque $\mathcal{A}$ est vide, sinon une autre itération commence avec une arête $e\in\mathcal{A}$ et l'on cherche un sommet en entrée qui va former avec $e$ un triangle Delaunay contraint.
 
-S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité de cet algorithme est en $O(n^{2}m)$. Le principal avantage de cet algorithme est de pouvoir mailler directement un domaine qui n'est plus nécessairement convexe, cependant il peut être ralenti par de nombreux tests d'intersections et en pratique, le maillage résultant peut aussi contenir des trous.
+S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité de cet algorithme est en $O(n^{2}m)$. Son principal avantage est de pouvoir mailler directement un domaine qui n'est plus nécessairement convexe, cependant il peut être ralenti par de nombreux tests d'intersections et en pratique, le maillage résultant peut aussi contenir des trous.
 
 \paragraph{Variantes} : on peut s'inspirer des algorithmes précédents pour insérer autrement un nouveau sommet dans une triangulation Delaunay (contrainte ou non) tout en conservant la propriété de Delaunay.
 
@@ -200,11 +200,11 @@ Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente 
 
 
 
-Un certain nombre de mécanismes du C++ ont été utilisés pour ajouter de la clarté au projet. Chaque module de la bibliothèque contient plusieurs fichiers sources et en-têtes où sont définies des classes, les interactions entre ces dernières étant régies par l'ajout de méthodes, le réglage des visibilités des membres de classes, ou encore par une technique de création de clé, nécessaire pour invoquer une méthode, mais que seules certaines classes peuvent se procurer. Dans la mesure du possible, les concepts étaient modélisés par des classes ; les méthodes qui prenaient en argument une fonction étaient codées comme des patrons que l'on utilisait par exemple grâce à des \emph{lambda}.
+Plusieurs mécanismes du C++ ont été utilisés pour ajouter de la clarté au projet. Chaque module de la bibliothèque contient plusieurs fichiers sources et en-têtes où sont définies des classes, les interactions entre ces dernières étant régies par l'ajout de méthodes, le réglage des visibilités des membres de classes, ou encore par une technique de création de clé, nécessaire pour invoquer une méthode, mais que seules certaines classes peuvent se procurer. Dans la mesure du possible, les concepts étaient modélisés par des classes ; les méthodes qui prenaient en argument une fonction étaient codées comme des patrons que l'on utilisait par exemple grâce à des \emph{lambda}.
 
 La classe maillage manipule des indices pour référencer les sommets, demi-arêtes et faces, or la structure de données évolue beaucoup à cause d'ajouts et suppressions répétés d'éléments. Il a fallu donc avoir à disposition une classe \og vecteur à trous \fg{} qui gère elle-même la modification du contenu d'une zone mémoire contiguë : les cases vides sont réutilisées dès que possible et les indices permettant de retrouver les éléments des vecteurs restent inchangés pendant tout le programme.
 
-Les tests se sont avérés essentiels : un fichier de test par sous-projet a été écrit. On y appelle les méthodes publiques des classes principales pour construire par exemple des maillages simples, mais de temps en temps dans la mesure du possible on essaye de considérer plusieurs cas limites. On prépare aussi des \emph{tests unitaires} pour vérifier le bon fonctionnement d'algorithmes et structures de données, indépendamment des autres éléments du programme. Par exemple, différentes configurations ont été considérées pour vérifier si le programme parvenait à savoir quand deux segments ouverts s'intersectaient.
+Les tests se sont avérés essentiels : un fichier de test par sous-projet a été écrit. On y appelle les méthodes publiques des classes principales pour construire par exemple des maillages simples, mais de temps en temps on essaye de considérer plusieurs cas limites. On a préparé aussi des \emph{tests unitaires} pour vérifier le bon fonctionnement d'algorithmes et structures de données, indépendamment des autres éléments du programme. Par exemple, différentes configurations ont été considérées pour vérifier si le programme parvenait à savoir quand deux segments ouverts s'intersectaient.
 
 \vspace{1cm}
 La gestion de version s'est faite grâce à l'outil Git \cite{Git}.
@@ -390,6 +390,33 @@ Nombre moyen de méthodes par classe & $7,8$\\\hline
 \includegraphics[scale=0.35, viewport=530 0 1680 1129, clip]{sq_del_vor.jpg}
 \caption{Domaine non convexe (en gris) : triangulation de Delaunay (arêtes en blanc) et diagramme de Voronoï étendu correspondant (arêtes en marron) (image obtenue avec Paraview). Les cellules de Voronoï ne sont pas nécessairement convexes.}
 \label{sq_del_vor}
+\end{figure}
+\end{center}
+\clearpage
+
+\begin{center}
+\begin{figure}[htbp]
+\includegraphics[scale=0.35, viewport=530 0 1680 1129, clip]{../figures/plc.jpg}
+\caption{Carré à mailler. L'interface (en traits blancs épais) ainsi que $500$ points (carrés blancs) doivent apparaître dans le résultat final.}
+\label{PLC}
+\end{figure}
+\end{center}
+\clearpage
+
+\begin{center}
+\begin{figure}[htbp]
+\includegraphics[scale=0.35, viewport=530 0 1680 1129, clip]{../figures/extended_vor.jpg}
+\caption{Diagramme de Voronoï étendu correspondant à la figure \ref{PLC} : on constate que le maillage n'est pas conforme à l'interface.}
+\label{extendedVoronoi}
+\end{figure}
+\end{center}
+\clearpage
+
+\begin{center}
+\begin{figure}[htbp]
+\includegraphics[scale=0.35, viewport=480 0 1620 1129, clip]{../figures/interfaceInSquare.jpg}
+\caption{Triangulation de Delaunay contrainte correspondant à la figure \ref{PLC} : l'interface est bien présente. Les arêtes vertes sont localement Delaunay.}
+\label{constrainedDelaunay}
 \end{figure}
 \end{center}
 \clearpage
