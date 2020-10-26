@@ -30,7 +30,7 @@
 \pagenumbering{gobble}
 \section*{Remerciements}
 
-Je remercie Laurent \textsc{Astart} de m'avoir accueilli à IFP \'Energies Nouvelles pour ce stage de fin d'études et je remercie Alexandra \textsc{Bac} de m'avoir co-encadré.
+Je remercie Laurent \textsc{Astart}\footnote{Ingénieur géométrie algorithmique à IFPEN} de m'avoir accueilli à IFP \'Energies Nouvelles pour ce stage de fin d'études et je remercie Alexandra \textsc{Bac}\footnote{Maître de conférences HDR au laboratoire d'informatique et systèmes à Aix-Marseille université} de m'avoir co-encadré.
 
 \tableofcontents
 \newpage
@@ -106,22 +106,23 @@ La propriété de ces maillages s'exprime aussi localement~: un maillage est Del
 Une illustration de la propriété d'être localement Delaunay pour une arête se trouve sur la figure \ref{locDelaunay}. On y aperçoit les mêmes points et presque les mêmes arêtes à gauche et à droite, cependant l'arête $e$ ne relie pas les mêmes sommets. \`A gauche, un cercle passant par les deux extrémités de $e=\mathrm{AC}$ n'englobe ni $\mathrm{B}$ ni $\mathrm{D}$, donc $e$ est localement Delaunay (les arêtes et sommets n'appartenant pas aux triangles $\mathrm{ACD}$ et $\mathrm{ABC}$ ne doivent pas être pris en compte). Quant au dessin de droite, le cercle circonscrit du triangle $\mathrm{ABD}$ englobe $\mathrm{C}$, donc $e=\mathrm{BD}$ n'est pas localement Delaunay.
 
 Lorsque l'on souhaite faire apparaître des arêtes spécifiques d'un ensemble $L$ dans le maillage à obtenir, on peut produire des maillages \emph{Delaunay contraints}~: il suffit pour cela de créer des maillages dont chaque arête est soit dans $L$, soit localement Delaunay. Les éléments de $L$ sont appelés des \emph{segments}. Plutôt que de mailler l'enveloppe convexe d'un nuage de point, on peut alors mailler un domaine qui n'est plus convexe et qui possède potentiellement des trous.
+
 Pour définir ce qu'est un triangle Delaunay contraint, définissons d'abord la notion de \emph{visibilité} : \emph{grosso modo}, deux sommets $x$ et $y$ sont visibles l'un de l'autre si le segment ouvert $xy$ n'est pas intersecté par un segment $l\in L$ tel que $l\neq xy$.
-Un triangle $\tau$ est alors dit \emph{Delaunay contraint} s'il satisfait la condition suivante : son cercle circonscrit n'englobe aucun sommet du maillage qui soit visible d'un point intérieur de $\tau$.
+Un triangle $\tau$ est alors dit \emph{Delaunay contraint} s'il satisfait la condition suivante : son cercle circonscrit n'englobe aucun sommet du maillage qui soit visible d'un point intérieur de $\tau$. Nous aurons besoin de cette définition pour expliquer un algorithme de génération de maillage.
 \vspace{1cm}
 
 Le \emph{diagramme de Voronoï} d'un ensemble fini de points $V\subset\mathbb{R}^2$ est constitué d'un ensemble de cellules $V_p$ pour tout $p\in V$, définies par
 \[V_p\ :=\ \left\{x\in\mathbb{R}^2\middle\vert\ \forall\,q\in V,\ \Vert x-p\Vert\leqslant\Vert x-q\Vert\right\}\text{.}\]
 Il s'agit du dual de la triangulation de Delaunay $\mathcal{T}$ de $V$~: le diagramme de Voronoï relie les centres de cercle circonscrit des triangles de $\mathcal{T}$. Il existe toujours cependant des cellules de Voronoï qui sont infinies et délimitées aussi par des bissectrices des arêtes du bord de $\mathcal{T}$. De façon générale, les cellules $V_p$ sont des polygones convexes.
 
-Lorsque l'on définit en plus l'ensemble des segments $L$ qui doivent apparaître dans le maillage $\mathcal{T}$, on s'intéresse plutôt au diagramme de Voronoï \emph{étendu} $\mathcal{V}$, défini dans \cite[pages 30-31]{Edelsbrunner}. Ici on ne représente que la \og feuille primale \fg{}~: on ne fait pas figurer des arêtes qui relient des centres de cercle circonscrit dans le diagramme $\mathcal{V}$ si elles intersectent un segment de $L$. Les sommets des cellules de Voronoï peuvent alors être des milieux de segments ou des intersections de bissectrices d'arêtes de $\mathcal{T}$ avec d'autres arêtes de $\mathcal{T}$.
+Lorsque l'on définit en plus l'ensemble $L$ des segments qui doivent apparaître dans le maillage $\mathcal{T}$, on s'intéresse plutôt au diagramme de Voronoï \emph{étendu} $\mathcal{V}$, défini dans \cite[pages 30-31]{Edelsbrunner}. Ici on ne représente que la \og feuille primale \fg{}~: on ne fait pas figurer des arêtes qui relient des centres de cercle circonscrit dans le diagramme $\mathcal{V}$ si elles intersectent un segment de $L$. Les sommets des cellules de Voronoï peuvent alors être des milieux de segments ou des intersections de bissectrices d'arêtes de $\mathcal{T}$ avec des segments de $\mathcal{T}$.
 
 Un exemple de diagramme de Voronoï obtenu avec la bibliothèque développée est visible sur la figure \ref{del_vor}.
 
 
 \subsubsection{Structure de données en demi-arêtes}
 
-Les maillages non structurés peuvent être représentés dans une structure compacte qui ne contient que les points ainsi que la liste des faces, elles-mêmes vues comme des listes de sommets. Mais une requête concernant des informations topologiques du maillage demande une préparation d'une autre structure de données indiquant les adjacences, ce qui constitue un inconvénient majeur lorsque l'on veut des algorithmes efficaces~: par exemple, toute modification du maillage demande une mise à jour des informations d'adjacences.
+Les maillages non structurés peuvent être représentés dans une structure compacte qui ne contient que les points ainsi que la liste des faces, elles-mêmes vues comme des listes de sommets. Mais une requête concernant des informations topologiques du maillage demande une préparation d'une autre structure de données indiquant les incidences, ce qui constitue un inconvénient majeur lorsque l'on veut des algorithmes efficaces~: par exemple, toute modification du maillage demande une mise à jour des informations d'adjacences et d'incidences.
 
 Afin d'obtenir rapidement des données sur la \emph{topologie} du maillage, la structure de données en demi-arêtes a été mise en \oe{}uvre~: cela consiste à représenter le maillage par un graphe plan orienté. Chaque arête donne naissance à deux demi-arêtes, opposées l'une à l'autre, chacune pointant vers l'une des extrémités de l'arête. Pour se déplacer à l'intérieur de la structure de données, chaque demi-arête $he$ intérieure à une face $f$ pointe vers 
 \begin{itemize}
@@ -168,7 +169,7 @@ Dans la bibliothèque à concevoir, on a ajouté des algorithmes qui construisen
 \end{enumerate}
 Avec une procédure de localisation efficace, on peut espérer une complexité en $O(n\log n)$, avec $n$ le nombre de sommets du maillage. Cet algorithme est plus rapide que celui présenté ci-après mais il nécessite d'avoir d'abord à disposition un maillage Delaunay. Par conséquent un domaine $D$ non convexe ne peut être maillé par cette procédure que si l'on est prêt à mailler un autre domaine convexe $D'$ qui inclut $D$, dont il faut ensuite enlever les triangles qui n'appartiennent à $D$.
 
-\paragraph{\indent Emballage cadeau (\emph{Gift-Wrapping})} : c'est un algorithme issu de la première classe citée qui maille un domaine défini par des polygones, des arêtes et des points, les éléments des deux derniers types devant apparaître dans le résultat. Le principe consiste à ajouter au fur et à mesure des triangles Delaunay contraints. Pour cela, on considère un ensemble $\mathcal{A}$ contenant des arêtes (orientées), initialisé au début avec les arêtes du bord du domaine. L'ensemble $\mathcal{A}$ est mis à jour à chaque insertion de triangle en fonction de ses côtés. L'algorithme prend fin lorsque $\mathcal{A}$ est vide, sinon une autre itération commence avec une arête $e\in\mathcal{A}$ et l'on cherche un sommet en entrée qui va former avec $e$ un triangle Delaunay contraint.
+\paragraph{\indent Emballage cadeau (\emph{Gift-Wrapping})} : c'est un algorithme issu de la première classe citée qui maille un domaine défini par des polygones (qui matérialisent l'intérieur du domaine à mailler), des arêtes et des points, les éléments des deux derniers types devant apparaître dans le résultat. Le principe consiste à ajouter au fur et à mesure des triangles Delaunay contraints. Pour cela, on considère un ensemble $\mathcal{A}$ contenant des arêtes (orientées), initialisé au début avec les arêtes du bord du domaine. L'ensemble $\mathcal{A}$ est mis à jour à chaque insertion de triangle en fonction de ses côtés, que l'on insère dans $\mathcal{A}$ s'ils n'ont pas encore été traités. L'algorithme prend fin lorsque $\mathcal{A}$ est vide, sinon une autre itération commence avec une arête $e\in\mathcal{A}$ et l'on cherche un sommet en entrée qui va former avec $e$ un triangle Delaunay contraint.
 
 S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité de cet algorithme est en $O(n^{2}m)$. Son principal avantage est de pouvoir mailler directement un domaine qui n'est plus nécessairement convexe, cependant il peut être ralenti par de nombreux tests d'intersections et en pratique, le maillage résultant peut aussi contenir des trous.
 
@@ -216,7 +217,7 @@ D'autres références à propos des maillages ont été lues : certaines décriv
 
 \subsection{Résultats}
 
-Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement peut être engendrée en moins de $10$ secondes. La plupart du temps, lorsqu'un grand nombre de points devaient être insérés dans un maillage, la position des points était tirée aléatoirement de façon uniforme, mais aussi de manière à éviter que des points ne se situent au bord du domaine et conduisent à la création de triangles dégénérés.
+Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement peut être engendrée en moins de $10$ secondes. La plupart du temps, lorsqu'un grand nombre de points devaient être insérés dans un maillage, la position des points était tirée aléatoirement de façon uniforme, mais aussi de manière à éviter que des points se situent au bord du domaine et conduisent à la création de triangles dégénérés.
 
 Certaines figures ont été créées grâce au format \verb+PLY+ : sur la figure \ref{cut_segments} on constate la préservation des segments dans un maillage Delaunay contraint. Quant aux figures \ref{simple_Delaunay}, \ref{two_segments} et \ref{five_segments}, elles mettent en évidence la capacité du programme à ajouter des segments dans un maillage Delaunay, contraint ou non.
 
@@ -276,10 +277,10 @@ Enfin, ce stage constitue une expérience professionnelle supplémentaire qui m'
 \begin{figure}
 \begin{center}
 \begin{tabular}{|l|c|}\hline
-Fichiers C++ écrits & $29$ \\\hline
-Lignes & $\approx 5000$\\\hline
-Classes & $41$\\\hline
-Nombre moyen de méthodes par classe & $7,8$\\\hline
+Fichiers C++ écrits & $30$ \\\hline
+Lignes & $\approx 5300$\\\hline
+Classes & $43$\\\hline
+Nombre moyen de méthodes par classe & $8$\\\hline
 \end{tabular}
 \caption{Quelques statistiques sur le code produit.}
 \label{stats}
