@@ -100,7 +100,7 @@ Cependant le véritable but du stage était l'appropriation de concepts liés à
 On présente ici les triangulations de Delaunay, les triangulations de Delaunay contraintes pour mailler un domaine non nécessairement convexe, puis le dual de ces triangulations qui sont une piste pour l'obtention d'un maillage polyédrique ayant de bonnes propriétés.
 \vspace{1cm}
 
-Une \emph{triangulation de Delaunay} d'un ensemble de points $V\subset\mathbb{R}^2$ est un maillage conforme de l'enveloppe convexe de $V$, constitué de triangles satisfaisant la propriété du cercle vide~: le disque ouvert défini par le cercle circonscrit d'un triangle ne doit contenir aucun sommet de $V$. Ces triangles sont dits alors Delaunay. Parmi toutes les triangulations de $V$, celles qui sont Delaunay maximisent la valeur du plus petit angle formé par deux arêtes~: ce sont donc, pour cet ensemble $V$ et du point de vue de la qualité des mailles, les \og meilleures \fg{} triangulations. On peut voir un maillage Delaunay sur la figure \ref{delaunay}.
+Une \emph{triangulation de Delaunay} d'un ensemble fini de points $V\subset\mathbb{R}^2$ est un maillage conforme de l'enveloppe convexe de $V$, constitué de triangles satisfaisant la propriété du cercle vide~: le disque ouvert défini par le cercle circonscrit d'un triangle ne doit contenir aucun sommet de $V$. Ces triangles sont dits alors Delaunay. Parmi toutes les triangulations de $V$, celles qui sont Delaunay maximisent la valeur du plus petit angle formé par deux arêtes~: ce sont donc, pour cet ensemble $V$ et du point de vue de la qualité des mailles, les \og meilleures \fg{} triangulations. On peut voir un maillage Delaunay sur la figure \ref{delaunay}.
 
 La propriété de ces maillages s'exprime aussi localement~: un maillage est Delaunay si et seulement si chaque arête est \emph{localement Delaunay}, \emph{i.e.} si chaque arête $e$ est au bord ou bien est la frontière commune de deux triangles $\tau_1$ et $\tau_2$ tels que le cercle circonscrit de $\tau_1$ n'englobe aucun sommet de $\tau_2$. Dans ce dernier cas, cela revient à dire qu'un cercle passant par les extrémités de $e$ n'englobe aucun sommet de $\tau_1$ et de $\tau_2$.
 Une illustration de la propriété d'être localement Delaunay pour une arête se trouve sur la figure \ref{locDelaunay}. On y aperçoit les mêmes points et presque les mêmes arêtes à gauche et à droite, cependant l'arête $e$ ne relie pas les mêmes sommets. \`A gauche, un cercle passant par les deux extrémités de $e=\mathrm{AC}$ n'englobe ni $\mathrm{B}$ ni $\mathrm{D}$, donc $e$ est localement Delaunay (les arêtes et sommets n'appartenant pas aux triangles $\mathrm{ACD}$ et $\mathrm{ABC}$ ne doivent pas être pris en compte). Quant au dessin de droite, le cercle circonscrit du triangle $\mathrm{ABD}$ englobe $\mathrm{C}$, donc $e=\mathrm{BD}$ n'est pas localement Delaunay.
@@ -167,11 +167,11 @@ Dans la bibliothèque à concevoir, on a ajouté des algorithmes qui construisen
 \item suppression des triangles trouvés ;
 \item retriangulation de la cavité formée : chaque nouveau triangle doit avoir $s$ pour sommet et avoir une arête de la cavité pour côté.
 \end{enumerate}
-Avec une procédure de localisation efficace, on peut espérer une complexité en $O(n\log n)$, avec $n$ le nombre de sommets du maillage. Cet algorithme est plus rapide que celui présenté ci-après mais il nécessite d'avoir d'abord à disposition un maillage Delaunay. Par conséquent un domaine $D$ non convexe ne peut être maillé par cette procédure que si l'on est prêt à mailler un autre domaine convexe $D'$ qui inclut $D$, dont il faut ensuite enlever les triangles qui n'appartiennent à $D$.
+Avec une procédure de localisation efficace, on peut espérer une complexité en $O(n\log n)$, avec $n$ le nombre de sommets du maillage. Cet algorithme est plus rapide que celui présenté ci-après mais il nécessite d'avoir d'abord à disposition un maillage Delaunay. Par conséquent un domaine $D$ non convexe ne peut être maillé par cette procédure que si l'on est prêt à mailler un autre domaine convexe $D'$ qui inclut $D$, dont il faut ensuite enlever les triangles qui n'appartiennent pas à $D$.
 
 \paragraph{\indent Emballage cadeau (\emph{Gift-Wrapping})} : c'est un algorithme issu de la première classe citée qui maille un domaine défini par des polygones (qui matérialisent l'intérieur du domaine à mailler), des arêtes et des points, les éléments des deux derniers types devant apparaître dans le résultat. Le principe consiste à ajouter au fur et à mesure des triangles Delaunay contraints. Pour cela, on considère un ensemble $\mathcal{A}$ contenant des arêtes (orientées), initialisé au début avec les arêtes du bord du domaine. L'ensemble $\mathcal{A}$ est mis à jour à chaque insertion de triangle en fonction de ses côtés, que l'on insère dans $\mathcal{A}$ s'ils n'ont pas encore été traités. L'algorithme prend fin lorsque $\mathcal{A}$ est vide, sinon une autre itération commence avec une arête $e\in\mathcal{A}$ et l'on cherche un sommet en entrée qui va former avec $e$ un triangle Delaunay contraint.
 
-S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité de cet algorithme est en $O(n^{2}m)$. Son principal avantage est de pouvoir mailler directement un domaine qui n'est plus nécessairement convexe, cependant il peut être ralenti par de nombreux tests d'intersections et en pratique, le maillage résultant peut aussi contenir des trous.
+S'il y a $n$ sommets et $m$ segments à considérer en entrée, la complexité de cet algorithme est en $O(n^{2}m)$. Son principal avantage est de pouvoir mailler directement un domaine qui n'est plus nécessairement convexe, cependant il peut être ralenti par de nombreux tests d'intersection et en pratique, le maillage résultant peut aussi contenir des trous.
 
 \paragraph{Variantes} : on peut s'inspirer des algorithmes précédents pour insérer autrement un nouveau sommet dans une triangulation Delaunay (contrainte ou non) tout en conservant la propriété de Delaunay.
 
@@ -201,7 +201,7 @@ Cette bibliothèque est découpée en plusieurs sous-projets que l'on présente 
 
 
 
-Plusieurs mécanismes du C++ ont été utilisés pour ajouter de la clarté au projet. Chaque module de la bibliothèque contient plusieurs fichiers sources et en-têtes où sont définies des classes, les interactions entre ces dernières étant régies par l'ajout de méthodes, le réglage des visibilités des membres de classes, ou encore par une technique de création de clé, nécessaire pour invoquer une méthode, mais que seules certaines classes peuvent se procurer. Dans la mesure du possible, les concepts étaient modélisés par des classes ; les méthodes qui prenaient en argument une fonction étaient codées comme des patrons que l'on utilisait par exemple grâce à des \emph{lambda}.
+Plusieurs mécanismes du C++ ont été utilisés pour ajouter de la clarté au projet. Chaque module de la bibliothèque contient plusieurs fichiers sources et en-têtes où sont définies des classes, les interactions entre ces dernières étant régies par l'ajout de méthodes, le réglage des visibilités des membres de classes, ou encore par une technique de création de clé, nécessaire pour invoquer une méthode, mais que seules certaines classes peuvent se procurer. Dans la mesure du possible, les concepts étaient modélisés par des classes ; les méthodes qui prenaient en argument une fonction étaient codées comme des patrons que l'on utilisait par exemple grâce à des expressions \emph{lambda}.
 
 La classe maillage manipule des indices pour référencer les sommets, demi-arêtes et faces, or la structure de données évolue beaucoup à cause d'ajouts et suppressions répétés d'éléments. Il a fallu donc avoir à disposition une classe \og vecteur à trous \fg{} qui gère elle-même la modification du contenu d'une zone mémoire contiguë : les cases vides sont réutilisées dès que possible et les indices permettant de retrouver les éléments des vecteurs restent inchangés pendant tout le programme.
 
@@ -218,6 +218,8 @@ D'autres références à propos des maillages ont été lues : certaines décriv
 \subsection{Résultats}
 
 Des images sont fournies en annexe pour illustrer quelques résultats issus de l'exécution des tests. On montre des triangulations de Delaunay, Delaunay contraintes ainsi que des diagrammes de Voronoï sur les figures \ref{del_vor} et \ref{sq_del_vor}. Une triangulation de Delaunay contenant $100\ 000$ points tirés aléatoirement peut être engendrée en moins de $10$ secondes. La plupart du temps, lorsqu'un grand nombre de points devaient être insérés dans un maillage, la position des points était tirée aléatoirement de façon uniforme, mais aussi de manière à éviter que des points se situent au bord du domaine et conduisent à la création de triangles dégénérés.
+
+La figure \ref{PLC} donne un exemple de contraintes à respecter pendant le maillage : l'intérieur du carré doit être maillé, l'interface ainsi que les points doivent faire partie du résultat. La triangulation de Delaunay contrainte obtenue est à la figure \ref{constrainedDelaunay}. Le diagramme de Voronoï correspondant apparaît à la figure \ref{extendedVoronoi} : on constate que le maillage n'est pas conforme à l'interface (c'est une conséquence de la définition venant de \cite{Edelsbrunner}).
 
 Certaines figures ont été créées grâce au format \verb+PLY+ : sur la figure \ref{cut_segments} on constate la préservation des segments dans un maillage Delaunay contraint. Quant aux figures \ref{simple_Delaunay}, \ref{two_segments} et \ref{five_segments}, elles mettent en évidence la capacité du programme à ajouter des segments dans un maillage Delaunay, contraint ou non.
 
@@ -238,7 +240,7 @@ Le travail effectué pendant ce stage m'a permis, d'une part, de me perfectionne
 
 La dépendance des formes des cellules de Voronoï vis-à-vis des sommets des triangulations de Delaunay n'a pas été étudiée. Or le placement des sommets pour lesquels on génère le diagramme de Voronoï est crucial pour obtenir de bons rapports de forme des mailles. Bien positionner les sommets de départ permet en outre de s'éloigner des conditions qui amènent par exemple au problème d'ajout de sommet près d'un segment, décrit à la sous-section précédente. Il sera peut-être nécessaire de s'intéresser à des méthodes d'optimisation de maillages si la qualité des premiers maillages volumiques n'est pas satisfaisante.
 
-Grâce aux difficultés rencontrées, théoriques et pratiques, je peux à présent mieux mesurer la complexité de la mission dans laquelle s'inscrit la thèse correspondante. Cette dernière sera l'occasion de trouver de bonnes propriétés pour des maillages 3D polyédriques, afin de résoudre des équations aux dérivées partielles modélisant des écoulements en milieu poreux.
+Grâce aux difficultés rencontrées, théoriques et pratiques, je peux à présent mieux mesurer la complexité de la mission dans laquelle s'inscrit la thèse correspondante. Cette dernière sera l'occasion de trouver de bonnes propriétés pour des maillages 3D polyédriques, qui permettront de résoudre des équations aux dérivées partielles modélisant des écoulements en milieu poreux.
 
 Enfin, ce stage constitue une expérience professionnelle supplémentaire qui m'a fait connaître une entreprise dont les missions liées aux domaines de l'énergie et de l'environnement sont d'actualité et font partie d'un secteur d'avenir.
 
@@ -278,7 +280,7 @@ Enfin, ce stage constitue une expérience professionnelle supplémentaire qui m'
 \begin{center}
 \begin{tabular}{|l|c|}\hline
 Fichiers C++ écrits & $30$ \\\hline
-Lignes & $\approx 5300$\\\hline
+Lignes & $\approx 5\ 300$\\\hline
 Classes & $43$\\\hline
 Nombre moyen de méthodes par classe & $8$\\\hline
 \end{tabular}
