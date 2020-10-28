@@ -85,7 +85,7 @@ Octobre & Seconde étude bibliographique\\
 La simulation d'écoulements dans le sous-sol nécessite des maillages tels que :
 \begin{itemize}
 \item<1,4,5,6> les éléments structuraux apparaissent
-\item<4-> certaines contraintes géométriques soient respectées\only<3>{ (régularité, conformité, orthogonalité$\dots$)}
+\item<4-> certaines contraintes géométriques soient respectées\only<4>{ (régularité, conformité, orthogonalité$\dots$)}
 \end{itemize}
 \end{visibleenv}
 
@@ -133,6 +133,27 @@ La simulation d'écoulements dans le sous-sol nécessite des maillages tels que 
 \section{Mission du stage}
 \begin{Energie}{}
 \tableofcontents[currentsection]
+\end{Energie}
+
+\begin{Energie}{Triangulation de Delaunay}
+\begin{center}
+\includegraphics[scale=0.55]{../pictures/delTri.jpg}
+\\figure 2.3 de la source \cite{delnotes}
+\end{center}
+\end{Energie}
+
+\begin{Energie}{Diagramme de Voronoï}
+
+Pour un ensemble fini $S\subset\mathbb{R}^2$, c'est une famille de convexes polyédriques $(V_{p})_{p\in S}$ recouvrant le plan :
+\[V_p\ :=\ \left\{x\in\mathbb{R}^2\middle\vert\ \forall\,q\in V,\ \Vert x-p\Vert\leqslant\Vert x-q\Vert\right\}\text{.}\]
+\end{Energie}
+
+\begin{Energie}{Dualité Delaunay/Voronoï}
+\vspace*{-1cm}Triangulation de Delaunay en bleu,
+arêtes du diagramme de Voronoï en blanc\\[0.8cm]
+\begin{center}
+\includegraphics[scale=0.18, viewport=450 30 1630 1300, clip]{duality.jpg}
+\end{center}
 \end{Energie}
 
 \subsection{Travail effectué}
@@ -185,6 +206,32 @@ flèche bleue : demi-arête, rond : sommet, \texttt{opp} : demi-arête opposée,
 \end{center}
 \end{Energie}
 
+\begin{Energie}{Algorithmes de génération de maillages}
+
+\begin{itemize}
+\item<1-3> gift-wrapping
+\item<1,4> Bowyer-Watson
+\end{itemize}
+\begin{onlyenv}<2>
+\begin{center}
+\includegraphics[scale=0.7]{advancingFront.jpg}
+\\Figure 1.7 de la source \cite{delnotes} : principe d'une méthode d'avancée de front
+\end{center}
+\end{onlyenv}
+\begin{onlyenv}<3>
+\begin{center}
+\includegraphics[scale=0.5]{giftWrappingStep.jpg}
+\\Figure 3.11 de la source \cite{delnotes} : étape de finition d'une arête pour le \emph{gift-wrapping}
+\end{center}
+\end{onlyenv}
+\begin{onlyenv}<4>
+\begin{center}
+\includegraphics[scale=0.5]{bowyerWatson.jpg}
+\\Figure 3.3 de la source \cite{delnotes} : algorithme de Bowyer-Watson
+\end{center}
+\end{onlyenv}
+\end{Energie}
+
 \begin{Energie}{Seconde étude bibliographique}\setbeamertemplate{itemize subitem}[square]
 
 Elle concerne
@@ -209,6 +256,7 @@ Elle concerne
 \begin{Energie}{Résultats}
 \begin{itemize}
 \item structure en demi-arêtes pour maillages bidimensionnels
+\item algorithmes de génération de maillages
 \item maillages polygonaux (Delaunay, Voronoï) exportés dans $3$ formats (OBJ, PLY, XDMF), de domaines du plan, convexes ou non
 \item temps de calcul diminué grâce à la structure d'arbre quaternaire
 \end{itemize}
@@ -216,13 +264,13 @@ Elle concerne
 
 \begin{Energie}{\normalsize Exemple de complexe linéaire par morceaux à mailler}
 \begin{center}
-\includegraphics[scale=0.25, viewport=620 250 1550 950, clip]{odd_plc.jpg}
+\includegraphics[scale=0.18, viewport=430 0 1800 1129, clip]{odd_plc.jpg}
 \end{center}
 \end{Energie}
 
 \begin{Energie}{\normalsize Triangulation de Delaunay contrainte correspondante}
 \begin{center}
-\includegraphics[scale=0.2, viewport=600 250 1750 1129, clip]{odd_cdt.jpg}
+\includegraphics[scale=0.18, viewport=430 0 1800 1129, clip]{odd_cdt.jpg}
 \end{center}
 \end{Energie}
 
@@ -289,12 +337,6 @@ Ce stage m'a permis de
 \end{btSect}}
 \end{Energie}
 
-\begin{Energie}{Triangulation de Delaunay}
-\begin{center}
-\includegraphics[scale=0.55]{../pictures/delTri.jpg}
-\\figure 2.3 de la source \cite{delnotes}
-\end{center}
-\end{Energie}
 
 
 \begin{Energie}{Arête localement Delaunay}
