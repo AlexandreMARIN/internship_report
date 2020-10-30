@@ -145,7 +145,7 @@ La simulation d'écoulements dans le sous-sol nécessite des maillages tels que 
 \begin{Energie}{Diagramme de Voronoï}
 
 Pour un ensemble fini $S\subset\mathbb{R}^2$, c'est une famille de convexes polyédriques $(V_{p})_{p\in S}$ recouvrant le plan :
-\[V_p\ :=\ \left\{x\in\mathbb{R}^2\middle\vert\ \forall\,q\in V,\ \Vert x-p\Vert\leqslant\Vert x-q\Vert\right\}\text{.}\]
+\[V_p\ :=\ \left\{x\in\mathbb{R}^2\middle\vert\ \forall\,q\in S,\ \Vert x-p\Vert\leqslant\Vert x-q\Vert\right\}\text{.}\]
 \end{Energie}
 
 \begin{Energie}{Dualité Delaunay/Voronoï}
@@ -159,16 +159,37 @@ arêtes du diagramme de Voronoï en blanc\\[0.8cm]
 \subsection{Travail effectué}
 \begin{Energie}{Première étude bibliographique}
 \bibliographystyle{plain}
-\begin{btSect}{../report/doc}
+\begin{btSect}{doc.bib}
 \btPrintCited
 \btPrintNotCited
 \end{btSect}
 \label{biblio}
 \end{Energie}
 
+\usetikzlibrary {shapes.geometric}
 \begin{Energie}{Bibliothèque logicielle programmée (C++)}
 \begin{center}
-\usetikzlibrary {shapes.geometric}
+
+\begin{onlyenv}<1>
+\begin{tikzpicture}[fill=blue!20]
+%\draw[help lines] (-1,-2) grid (6,3);
+\path (0,0)
+(10,0) node(c) [rectangle,draw,fill] {GeometricCore}
+(5,0) node(d) [rectangle,draw,fill] {MeshCore}
+(2,2) node(e) [rectangle,draw,fill] {MeshIO}
+(2,0) node(f) [rectangle,draw,fill] {Delaunay}
+(2,-2) node(g) [rectangle,draw,fill] {Voronoi};
+
+\draw[thick, ->] (d) |- (c);
+\draw[thick,->] (e) -- (d) ;
+\draw[thick,->] (f) -- (d) ;
+\draw[thick,->] (g) -- (d) ;
+\draw[thick,blue,->] (f) .. controls +(down:1.5cm) .. (c);
+\draw[thick,blue,->] (g.east) .. controls +(right:1.5cm) .. (c);
+\end{tikzpicture}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
 \begin{tikzpicture}[fill=blue!20]
 %\draw[help lines] (-1,-2) grid (6,3);
 \path (0,0)
@@ -177,7 +198,7 @@ arêtes du diagramme de Voronoï en blanc\\[0.8cm]
 (2,2) node(e) [rectangle,draw,fill] {MeshIO}
 (2,0) node(f) [rectangle,draw,fill] {Delaunay}
 (2,-2) node(g) [rectangle,draw,fill] {Voronoi}
-(2,-4) node(h) [rectangle,draw,fill] {Test};
+(2,-4) node(h) [rectangle,draw,fill=red!30] {Test};
 \draw[thick, ->] (d) |- (c);
 \draw[thick,->] (h) -| +(-2,0) |- (f) ;
 \draw[thick,->] (h) -| +(-2,0) |- (e) ;
@@ -190,7 +211,8 @@ arêtes du diagramme de Voronoï en blanc\\[0.8cm]
 \draw[thick,blue,->] (f) .. controls +(down:1.5cm) .. (c);
 \draw[thick,blue,->] (g.east) .. controls +(right:1.5cm) .. (c);
 \end{tikzpicture}
-\label{archi}
+\end{onlyenv}
+%\label{archi}
 
 Architecture du projet (sous QtCreator)
 \end{center}
@@ -209,8 +231,8 @@ flèche bleue : demi-arête, rond : sommet, \texttt{opp} : demi-arête opposée,
 \begin{Energie}{Algorithmes de génération de maillages}
 
 \begin{itemize}
-\item<1-3> gift-wrapping
-\item<1,4> Bowyer-Watson
+\item<1-4> gift-wrapping
+\item<1,5,6> Bowyer-Watson
 \end{itemize}
 \begin{onlyenv}<2>
 \begin{center}
@@ -224,12 +246,26 @@ flèche bleue : demi-arête, rond : sommet, \texttt{opp} : demi-arête opposée,
 \\Figure 3.11 de la source \cite{delnotes} : étape de finition d'une arête pour le \emph{gift-wrapping}
 \end{center}
 \end{onlyenv}
-\begin{onlyenv}<4>
+\begin{onlyenv}<4>\vspace{1cm}
+Complexité en $\mathcal{O}(n^{2}m)$ avec $n$ le nombre de sommets et $m$ le nombre de segments contraintes
+\end{onlyenv}
+
+\begin{onlyenv}<5>
 \begin{center}
 \includegraphics[scale=0.5]{bowyerWatson.jpg}
 \\Figure 3.3 de la source \cite{delnotes} : algorithme de Bowyer-Watson
 \end{center}
 \end{onlyenv}
+\begin{onlyenv}<6>\vspace{1cm}
+Complexité en $\mathcal{O}(n\log(n))$ avec $n$ le nombre de sommets
+\end{onlyenv}
+
+\end{Energie}
+
+\begin{Energie}{Graphe d'incidences}
+\begin{center}
+\includegraphics[scale=0.45]{adjacencies.jpg}
+\end{center}
 \end{Energie}
 
 \begin{Energie}{Seconde étude bibliographique}\setbeamertemplate{itemize subitem}[square]
@@ -280,17 +316,18 @@ Elle concerne
 \end{center}
 \end{Energie}
 
+\begin{Energie}{\normalsize Triangulation de Delaunay correspondante}
+\begin{center}\vspace{-1cm}
+\includegraphics[scale=0.18, viewport=480 0 1630 1300, clip]{interfaceInSquare.jpg}
+\end{center}
+\end{Energie}
+
 \begin{Energie}{\normalsize Diagramme de Voronoï correspondant}
 \begin{center}\vspace{-1cm}
 \includegraphics[scale=0.18, viewport=500 0 1700 1300, clip]{extended_vor.jpg}
 \end{center}
 \end{Energie}
 
-\begin{Energie}{\normalsize Triangulation de Delaunay correspondante}
-\begin{center}\vspace{-1cm}
-\includegraphics[scale=0.18, viewport=480 0 1630 1300, clip]{interfaceInSquare.jpg}
-\end{center}
-\end{Energie}
 
 \subsection{Difficultés}
 
@@ -308,7 +345,7 @@ Elle concerne
 Ce stage m'a permis de
 
 \begin{itemize}
-\item<1-> découvrir des concepts en génération de maillages, parfois pour les géosciences
+\item<1-> découvrir des concepts en génération de maillages pour les géosciences
 \item<2-> de préparer la thèse qui suit : 
 \begin{itemize}
 \item<3-> difficultés algorithmiques
@@ -338,7 +375,7 @@ Ce stage m'a permis de
 \end{Energie}
 
 
-
+%annexes
 \begin{Energie}{Arête localement Delaunay}
 \begin{center}
 \includegraphics[scale=0.6]{locDel.jpg}
@@ -346,10 +383,20 @@ Ce stage m'a permis de
 \end{center}
 \end{Energie}
 
-\begin{Energie}{Graphe d'incidences}
+\begin{Energie}{Quadtree : boîtes englobantes}
 \begin{center}
-\includegraphics[scale=0.65]{adjacencies.jpg}
+\includegraphics[scale=0.5]{boundingBoxes.jpg}
 \end{center}
+\end{Energie}
+
+\begin{Energie}{Quadtree : structure d'arbre}
+
+\begin{columns}[c]
+\column{4cm}
+\includegraphics[scale=0.28]{boundingBoxes.jpg}
+\column{8cm}
+\includegraphics[scale=0.35]{quadtree.jpg}
+\end{columns}
 \end{Energie}
 
 \end{document}
